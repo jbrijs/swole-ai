@@ -42,6 +42,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <button onClick={logout}>Logout</button>
+      <div className='text-5xl'>My div</div>
     </>
   )
 }
