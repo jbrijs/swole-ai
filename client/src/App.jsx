@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   async function logout() {
     const res = await fetch("/registration/logout/", {
@@ -21,30 +19,20 @@ function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <nav className="flex flex-row justify-end items-center h-16 shadow-lg top-0 left-0">
+      <button className="text-xl text-white font-light pr-10 hover:underline underline-offset-4 decoration-1 decoration-accent" onClick={logout}>Logout</button>
+    </nav>
+      <h1 className="text-5xl text-white my-20">Welcome to SwoleAI, User!</h1>
+      <div className="flex flex-row items-center justify-center gap-3">
+        <button className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
+          Go to plan
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button className="bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
+          Create a new plan
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <button onClick={logout}>Logout</button>
-      <div className='text-5xl'>My div</div>
     </>
-  )
+  );
 }
 
 export default App;
