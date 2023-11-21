@@ -1,46 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import TextForm from "./TextForm";
+import NumberForm from "./NumberForm";
+import { sexOptions, goalOptions, experienceOptions } from "./utils/options";
+import SelectionForm from "./SelectionForm";
 
 function Profile() {
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [age, setAge] = useState(13)
+  const [sex, setSex] = useState("")
+  const [goal, setGoal] = useState("")
+  const [experience, setExperience] = useState("")
+
+
+  async function createProfile(e){
+    e.preventDefault()
+  }
   return (
     <>
   <div className="flex flex-col justify-center items-center m-20">
-    <form action="/" method="POST" className="flex flex-col items-start w-1/2">
+    <form onSubmit={createProfile} className="flex flex-col items-start w-1/2">
       <h2 className="text-4xl font-light text-tertiary">Personal Information</h2>
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="first_name">First Name</label>
-      <input className="p-1 rounded-xl bg-primary w-full pl-2" type="text" id="first_name" name="first_name" />
-
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="last_name">Last Name</label>
-      <input className="p-1 rounded-xl bg-primary w-full pl-2" type="text" id="last_name" name="last_name" />
-
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="email">Email</label>
-      <input className="p-1 rounded-xl bg-primary w-full pl-2" type="email" id="email" name="email" />
-
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="age">Age</label>
-      <input className="p-1 rounded-xl bg-primary w-full pl-2" type="number" id="age" name="age" min="13" max="100"/>
-
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="sex">Sex</label>
-      <select className="h-8 rounded-xl bg-primary w-1/2 pl-2" id="sex" name="sex">
-        <option value="M">Male</option>
-        <option value="F">Female</option>
-        <option value="U">Other/Choose not to say</option>
-      </select>
-
+      {TextForm(firstName, "First Name", "first_name", e => setFirstName(e.target.value), "text")}
+      {TextForm(lastName, "Last Name", "last_name", e => setLastName(e.target.value), "text")}
+      {TextForm(email, "Email", "email", e => setEmail(e.target.value), "email")}
+      {NumberForm(age, "Age", "age", e => Number(setAge(e.target.value)), 13, 100)}
+      {SelectionForm(sex, "Sex", "sex", e => setSex(e.target.value), sexOptions)}
       <h2 className="text-4xl font-light text-tertiary pt-12">Plan Preferences</h2>
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="goals">Goals</label>
-      <select className="h-8 rounded-xl bg-primary w-1/2 pl-2" id="goals" name="goals">
-        <option value="S">Strength</option>
-        <option value="F">Fat Loss</option>
-        <option value="M">Muscle Gain</option>
-      </select>
-
-      <label className="text-2xl text-white font-light pb-1 pt-4" htmlFor="experience">Experience</label>
-      <select className="h-8 rounded-xl bg-primary w-1/2 pl-2" id="experience" name="experience">
-        <option value="N">Novice</option>
-        <option value="B">Beginner</option>
-        <option value="I">Intermediate</option>
-        <option value="A">Advanced</option>
-      </select>
-
+      {SelectionForm(goal, "Goals", "goal", e => setGoal(e.target.value), goalOptions)}
+      {SelectionForm(experience, "Experience", "experience", e => setExperience(e.target.value), experienceOptions)}
       <button type="submit" className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white">Submit</button>
     </form>
   </div>
