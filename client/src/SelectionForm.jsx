@@ -16,6 +16,7 @@ function SelectionForm(content, label, name, onChange, options) {
         onChange={onChange}
         value={content}
       >
+        <option value="">Select {label}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
