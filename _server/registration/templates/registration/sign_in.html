@@ -1,22 +1,19 @@
-{% extends "registration/base.html"%}
-
-{% block content %}
+{% extends "registration/base.html"%} {% block content %}
 <form action="/registration/sign_in/" method="post">
   {% csrf_token %}
-  <div>
-    <label>
-      Email
-      <input type="email" name="email">
-    </label>
+  <div class="headings">
+    <h1>Welcome to SwoleAI</h1>
+    <h2>Please sign-in or create a new account to continue</h2>
   </div>
-  <div>
-    <label>
-      Password
-      <input type="password" name="password">
-    </label>
+  <div class="input-container">
+    <label class="label"> Email </label>
+    <input class="input" type="email" name="email" />
+  </div>
+  <div class="input-container">
+    <label class="label"> Password </label>
+    <input class="input" type="password" name="password" />
   </div>
   <button>Sign In</button>
-
 </form>
-<a href="/registration/sign_up/">Create New Account</a>
+<a id="create-account" href="/registration/sign_up/">Create New Account</a>
 {% endblock %}
