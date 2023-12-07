@@ -9,7 +9,7 @@ function Home() {
         <button className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
           Go to plan
         </button>
-        <Link className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition" to="/new_plan_info">
+        <Link className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition" to="/plan_info">
           Create a new plan
         </Link>
       </div>

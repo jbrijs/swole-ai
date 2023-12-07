@@ -1,6 +1,6 @@
 import React from "react";
 
-function NumberForm(content, label, name, onChange, min, max) {
+function NumberForm({ value, label, name, onChange, min, max }) {
   return (
     <>
       <label
@@ -14,7 +14,7 @@ function NumberForm(content, label, name, onChange, min, max) {
         type="number"
         name={name}
         id={name}
-        value={content}
+        value={value}
         onChange={onChange}
         min={min}
         max={max}
