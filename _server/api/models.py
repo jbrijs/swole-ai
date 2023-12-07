@@ -1,5 +1,5 @@
 from django.db import models
-from ..core.models import Profile
+from core.models import Profile
 
 class Plan(models.Model):
     id = models.BigAutoField(primary_key=True)
