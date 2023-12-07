@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
+
 
   async function logout() {
     const res = await fetch("/registration/logout/", {
