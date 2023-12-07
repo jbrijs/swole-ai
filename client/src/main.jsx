@@ -6,6 +6,7 @@ import 'vite/modulepreload-polyfill'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import Profile from './Profile.jsx'
 import Home from './Home.jsx'
+import PlanInfo from './PlanInfo.jsx'
 
 const router = createHashRouter([
   {
@@ -19,6 +20,11 @@ const router = createHashRouter([
       {
         path: "/profile",
         element: <Profile/>,
+      },
+      {
+        path: "/new_plan_info",
+        element: <PlanInfo/>,
+  
       }
     ]
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -8,9 +9,9 @@ function Home() {
         <button className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
           Go to plan
         </button>
-        <button className="bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
+        <Link className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition" to="/new_plan_info">
           Create a new plan
-        </button>
+        </Link>
       </div>
     </>
   );
