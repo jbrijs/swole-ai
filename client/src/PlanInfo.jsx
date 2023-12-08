@@ -19,7 +19,7 @@ function PlanInfo() {
     <div className="flex flex-col justify-center items-center m-20">
       <form onSubmit={goToNewPlan} className="flex flex-col items-start w-1/2">
         <h2 className="text-4xl font-light text-tertiary">
-          Personal Information
+          Plan Information
         </h2>
         <NumberForm
           value={numWeeks}
