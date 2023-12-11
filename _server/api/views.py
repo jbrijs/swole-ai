@@ -9,3 +9,11 @@ from django.forms.models import model_to_dict
 def get_first_name(req):
     name = req.user.first_name
     return JsonResponse({"name": name})
+
+@login_required
+def get_plan(req):
+    plan = req.user.profile.plan
+    if plan:
+        return JsonResponse({"plan": plan})
+    return
+

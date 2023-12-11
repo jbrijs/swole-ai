@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function Home() {
   const [userName, setUserName] = useState(null);
+  const [userPlan, setUserPlan] = useState(null)
 
   async function getUserName(){
     const res = await fetch("/api/get_name", {
@@ -13,12 +14,22 @@ function Home() {
     setUserName(body.name)
   }
 
+  async function getPlan(){
+    const res = await fetch("/api/get_plan", {
+      credentials: "same-origin",
+    });
+    const body = await res.json();
+    setUserPlan(body.plan)
+  }
+
   useEffect(()=> {
     getUserName();
+    getPlan();
   }, [])
 
   return (
     <>
+      {userPlan && <p>I have a plan</p>}
       <h1 className="text-5xl text-white my-20">
         Welcome to SwoleAI, {userName + "!" || "User!"}
       </h1>
