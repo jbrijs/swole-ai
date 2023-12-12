@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ExerciseInput from "./ExerciseInput";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import cookie from "cookie";
+
+
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
-  return Array.from({ length: numWeeks }, () => ({
-    days: Array.from({ length: daysPerWeek }, () => ({
-      exercises: Array.from({ length: exercisesPerDay }, () => ({
-        name: "",
-        sets: 0,
-        reps: 0,
-        weight: 0,
+  return {
+    name: "", // You can allow users to set this name
+    weeks: Array.from({ length: numWeeks }, (_, weekIndex) => ({
+      days: Array.from({ length: daysPerWeek }, (_, dayIndex) => ({
+        name: `Day ${dayIndex + 1}`, 
+        exercises: Array.from({ length: exercisesPerDay }, () => ({
+          name: "",
+          sets: 0,
+          reps: 0,
+          weight: 0,
+        })),
       })),
     })),
-  }));
+  };
 };
 
 function NewPlan() {
@@ -25,18 +32,43 @@ function NewPlan() {
   );
   const [currentWeek, setCurrentWeek] = useState(0);
 
-  const handleSubmit = (e) => {
+  async function createPlan(e) {
     e.preventDefault();
-  };
+    const res = await fetch("/api/create_plan", {
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify(plan),
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+      },
+    });
+  }
 
-  console.log(numWeeks)
-  console.log(currentWeek)
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
-    const newPlan = [...plan];
     const { name, value } = event.target;
-    newPlan[weekIndex].days[dayIndex].exercises[exerciseIndex][name] = value;
-    setPlan(newPlan);
+
+    setPlan((prevPlan) => {
+      const updatedPlan = { ...prevPlan };
+      const updatedWeeks = [...updatedPlan.weeks];
+      const updatedWeek = { ...updatedWeeks[weekIndex] };
+      const updatedDays = [...updatedWeek.days];
+      const updatedDay = { ...updatedDays[dayIndex] };
+      const updatedExercises = [...updatedDay.exercises];
+      const updatedExercise = { ...updatedExercises[exerciseIndex] };
+
+      updatedExercise[name] = value;
+
+      updatedExercises[exerciseIndex] = updatedExercise;
+      updatedDay.exercises = updatedExercises;
+      updatedDays[dayIndex] = updatedDay;
+      updatedWeek.days = updatedDays;
+      updatedWeeks[weekIndex] = updatedWeek;
+      updatedPlan.weeks = updatedWeeks;
+
+      return updatedPlan;
+    });
   };
 
   return (
@@ -44,7 +76,7 @@ function NewPlan() {
       <div className="flex flex-col justify-center items-center">
         <form
           className="flex flex-col justify-center items-center mt-10"
-          onSubmit={handleSubmit}
+          onSubmit={createPlan}
         >
           <div key={currentWeek}>
             <h1
@@ -53,7 +85,7 @@ function NewPlan() {
             >
               Week {currentWeek + 1}
             </h1>
-            {plan[currentWeek].days.map((day, dayIndex) => (
+            {plan.weeks[currentWeek].days.map((day, dayIndex) => (
               <div key={dayIndex}>
                 <h1
                   className="text-2xl font-light text-tertiary pb-2 pt-6"
@@ -93,7 +125,12 @@ function NewPlan() {
             ))}
           </div>
           {currentWeek + 1 == numWeeks && (
-            <button type="submit">Submit Plan</button>
+            <button
+              className="bg-primary px-3 mt-10 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+              type="submit"
+            >
+              Submit Plan
+            </button>
           )}
         </form>
         <div className="relative h-20 w-1/2 mt-10">
