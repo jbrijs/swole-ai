@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from .models import Plan, Week, Day, Exercise
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -13,11 +15,34 @@ def get_first_name(req):
     return JsonResponse({"name": name})
 
 @login_required
-def get_plan(req):
-    plan = req.user.profile.plan
+def get_plan(request):
+    plan = request.user.profile.plan
     if plan:
-        return JsonResponse({"plan": plan})
-    return
+        weeks = Week.objects.filter(plan=plan).prefetch_related('days__exercises')
+        weeks_data = []
+        for week in weeks:
+            days_data = []
+            for day in week.days.all():
+                exercises_data = []
+                for exercise in day.exercises.all():
+                    exercises_data.append({
+                        'id': exercise.id,
+                        'name': exercise.name,
+                        'sets': exercise.sets,
+                        'reps': exercise.reps,
+                        'weight': exercise.weight,
+                    })
+                days_data.append({
+                    'id': day.id,
+                    'name': day.name,
+                    'exercises': exercises_data,
+                })
+            weeks_data.append({'id': week.id, 'days': days_data})
+        print("not none")
+        return JsonResponse({'id': plan.id, 'name': plan.name, 'weeks': weeks_data})
+    else:
+        print("none")
+        return JsonResponse({'plan': None})
 
 @login_required
 def create_plan(req):

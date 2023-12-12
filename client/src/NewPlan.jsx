@@ -119,6 +119,7 @@ function NewPlan() {
                         e
                       )
                     }
+                    editable={true}
                   />
                 ))}
               </div>
