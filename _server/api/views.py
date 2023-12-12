@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from .models import Plan, Week, Day, Exercise
 from django.contrib.auth.models import User
-
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def get_first_name(req):
@@ -14,8 +15,11 @@ def get_first_name(req):
 
 @login_required
 def get_plan(request):
-    plan = request.user.profile.plan
-    if plan:
+    try:
+        plan = request.user.profile.plan
+        if not plan:
+            raise ObjectDoesNotExist
+
         weeks = Week.objects.filter(plan=plan).prefetch_related('days__exercises')
         weeks_data = []
         for week in weeks:
@@ -36,11 +40,11 @@ def get_plan(request):
                     'exercises': exercises_data,
                 })
             weeks_data.append({'id': week.id, 'days': days_data})
-        print("not none")
-        return JsonResponse({'id': plan.id, 'name': plan.name, 'weeks': weeks_data})
-    else:
-        print("none")
+        return JsonResponse({'plan': {'id': plan.id, 'name': plan.name, 'weeks': weeks_data}})
+
+    except ObjectDoesNotExist:
         return JsonResponse({'plan': None})
+
 
 @login_required
 def create_plan(req):
@@ -64,3 +68,9 @@ def create_plan(req):
         return JsonResponse({"plan": model_to_dict(plan)})
     return JsonResponse({"error": "Invalid request"}, status=400)
 
+
+@login_required
+def delete_plan(req):
+    plan = get_object_or_404(Plan, profile=req.user.profile)
+    plan.delete()
+    return JsonResponse({"message": "Plan deleted successfully"}, status=200)

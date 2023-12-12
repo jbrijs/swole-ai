@@ -10,8 +10,6 @@ function PlanInfo() {
 
   const goToNewPlan = (event) => {
     event.preventDefault();
-    // Add your form submission logic here
-    // ...
     navigate('/create_new_plan', { state: { numWeeks, daysPerWeek, exercisesPerDay } });
   };
 

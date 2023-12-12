@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Plan from "./Plan";
+import cookie from "cookie";
 
 function Home() {
   const [userName, setUserName] = useState("User!");
@@ -22,20 +23,31 @@ function Home() {
       credentials: "same-origin",
     });
     const body = await res.json();
-    setUserPlan(body);
+    setUserPlan(body.plan)
+    console.log(body.plan)
   }
 
   async function deletePlan() {
     const res = await fetch("/api/delete_plan", {
+      method: "DELETE",
       credentials: "same-origin",
+      headers: {
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+      },
     });
+    navigate("/plan_info");
   }
 
   const handleCreateNewPlan = () => {
-    const confirm = window.confirm("Are you sure? Doing so will delete your current plan.");
-    if (confirm) {
-      navigate('/plan_info');
+    if (userPlan) {
+      const confirm = window.confirm(
+        "Are you sure? Doing so will delete your current plan."
+      );
+      if (confirm) {
+        deletePlan();
+      }
     }
+    navigate("/plan_info");
   };
 
   useEffect(() => {
@@ -43,7 +55,7 @@ function Home() {
     getPlan();
   }, []);
 
-  console.log(editable);
+  console.log(userPlan);
 
   return (
     <>
