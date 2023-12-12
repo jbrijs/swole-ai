@@ -7,8 +7,6 @@ from .models import Plan, Week, Day, Exercise
 from django.contrib.auth.models import User
 
 
-# Create your views here.
-
 @login_required
 def get_first_name(req):
     name = req.user.first_name
