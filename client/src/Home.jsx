@@ -23,8 +23,7 @@ function Home() {
       credentials: "same-origin",
     });
     const body = await res.json();
-    setUserPlan(body.plan)
-    console.log(body.plan)
+    setUserPlan(body.plan);
   }
 
   async function deletePlan() {
@@ -47,7 +46,43 @@ function Home() {
         deletePlan();
       }
     }
-    navigate("/plan_info");
+  };
+
+  async function editPlan() {
+    const res = await fetch("/api/edit_plan", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+      },
+      body: JSON.stringify(userPlan),
+    });
+    setEditable(false)
+  }
+
+  const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
+    const { name, value } = event.target;
+    setUserPlan((prevPlan) => {
+      const updatedPlan = { ...prevPlan };
+      const updatedWeeks = [...updatedPlan.weeks];
+      const updatedWeek = { ...updatedWeeks[weekIndex] };
+      const updatedDays = [...updatedWeek.days];
+      const updatedDay = { ...updatedDays[dayIndex] };
+      const updatedExercises = [...updatedDay.exercises];
+      const updatedExercise = { ...updatedExercises[exerciseIndex] };
+
+      updatedExercise[name] = value;
+
+      updatedExercises[exerciseIndex] = updatedExercise;
+      updatedDay.exercises = updatedExercises;
+      updatedDays[dayIndex] = updatedDay;
+      updatedWeek.days = updatedDays;
+      updatedWeeks[weekIndex] = updatedWeek;
+      updatedPlan.weeks = updatedWeeks;
+
+      return updatedPlan;
+    });
   };
 
   useEffect(() => {
@@ -55,20 +90,24 @@ function Home() {
     getPlan();
   }, []);
 
-  console.log(userPlan);
-
   return (
     <>
       <h1 className="text-5xl text-white my-20">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
       <div className="flex flex-row items-center justify-center gap-3 mb-20">
-        <button
-          className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-          onClick={() => setEditable(true)}
-        >
-          Edit plan
-        </button>
+        {editable ? (
+          <button className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition" onClick={editPlan}>
+            Save Plan
+          </button>
+        ) : (
+          <button
+            className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+            onClick={() => setEditable(true)}
+          >
+            Edit plan
+          </button>
+        )}
         <button
           className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
           onClick={handleCreateNewPlan}
@@ -76,7 +115,7 @@ function Home() {
           Create a new plan
         </button>
       </div>
-      {userPlan && <Plan userPlan={userPlan} editable={editable}></Plan>}
+      {userPlan && <Plan userPlan={userPlan} editable={editable} handleExerciseChange={handleExerciseChange}></Plan>}
     </>
   );
 }

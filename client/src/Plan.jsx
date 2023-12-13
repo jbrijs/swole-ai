@@ -1,35 +1,12 @@
 import React, { useState } from "react";
 import ExerciseInput from "./ExerciseInput";
 
-function Plan({ userPlan, editable }) {
+function Plan({ userPlan, editable, handleExerciseChange }) {
   const [currentWeek, setCurrentWeek] = useState(0);
-  const [plan, setPlan] = useState(userPlan);
+ 
 
-  console.log(userPlan)
-  const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
-    const { name, value } = event.target;
+  
 
-    setPlan((prevPlan) => {
-      const updatedPlan = { ...prevPlan };
-      const updatedWeeks = [...updatedPlan.weeks];
-      const updatedWeek = { ...updatedWeeks[weekIndex] };
-      const updatedDays = [...updatedWeek.days];
-      const updatedDay = { ...updatedDays[dayIndex] };
-      const updatedExercises = [...updatedDay.exercises];
-      const updatedExercise = { ...updatedExercises[exerciseIndex] };
-
-      updatedExercise[name] = value;
-
-      updatedExercises[exerciseIndex] = updatedExercise;
-      updatedDay.exercises = updatedExercises;
-      updatedDays[dayIndex] = updatedDay;
-      updatedWeek.days = updatedDays;
-      updatedWeeks[weekIndex] = updatedWeek;
-      updatedPlan.weeks = updatedWeeks;
-
-      return updatedPlan;
-    });
-  };
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-10">
@@ -37,7 +14,7 @@ function Plan({ userPlan, editable }) {
           <h1 className="text-3xl font-light text-white mb-4" key={currentWeek}>
             Week {currentWeek + 1}
           </h1>
-          {plan.weeks[currentWeek].days.map((day, dayIndex) => (
+          {userPlan.weeks[currentWeek].days.map((day, dayIndex) => (
             <div key={dayIndex} className="w-full">
               <h1
                 className="text-2xl font-light text-tertiary pb-2"

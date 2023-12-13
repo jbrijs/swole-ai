@@ -6,13 +6,12 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import cookie from "cookie";
 import { Navigate } from "react-router-dom";
 
-
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
     name: "", // You can allow users to set this name
     weeks: Array.from({ length: numWeeks }, (_, weekIndex) => ({
       days: Array.from({ length: daysPerWeek }, (_, dayIndex) => ({
-        name: `Day ${dayIndex + 1}`, 
+        name: `Day ${dayIndex + 1}`,
         exercises: Array.from({ length: exercisesPerDay }, () => ({
           name: "",
           sets: 0,
@@ -44,10 +43,8 @@ function NewPlan() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-    navigate("/")
+    navigate("/");
   }
-  
-
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
     const { name, value } = event.target;

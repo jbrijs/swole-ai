@@ -75,3 +75,28 @@ def delete_plan(req):
     plan = get_object_or_404(Plan, profile=req.user.profile)
     plan.delete()
     return JsonResponse({"message": "Plan deleted successfully"}, status=200)
+
+
+
+@login_required
+def edit_plan(request):
+    data = json.loads(request.body)
+    plan = request.user.profile.plan
+
+
+    for week_data in data['weeks']:
+        week = Week.objects.filter(plan=plan, id=week_data['id']).first()
+
+        for day_data in week_data['days']:
+            day = Day.objects.filter(week=week, id=day_data['id']).first()
+
+            for exercise_data in day_data['exercises']:
+                exercise = Exercise.objects.filter(day=day, id=exercise_data['id']).first()
+                if exercise:
+                    exercise.name = exercise_data.get('name', exercise.name)
+                    exercise.sets = exercise_data.get('sets', exercise.sets)
+                    exercise.reps = exercise_data.get('reps', exercise.reps)
+                    exercise.weight = exercise_data.get('weight', exercise.weight)
+                    exercise.save()
+
+    return JsonResponse({'message': 'Plan updated successfully'}, status=200)
