@@ -107,7 +107,7 @@ function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-5xl text-textgt my-20">
+      <h1 className="text-5xl text-text font-light my-20">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
       <div className="flex flex-row items-center justify-center gap-3 mb-20"></div>
