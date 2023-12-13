@@ -38,7 +38,7 @@ function Home() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-    navigate("/plan_info");
+
   }
 
   const handleCreateNewPlan = () => {
@@ -89,6 +89,16 @@ function Home() {
     });
   };
 
+  const handleDeleteButton = () => {
+    const confirm = window.confirm(
+      "Are you sure? Doing so will delete your current plan."
+    );
+    if (confirm) {
+      deletePlan();
+      setUserPlan(null)
+    }
+  };
+
   useEffect(() => {
     getUserName();
     getPlan();
@@ -105,6 +115,7 @@ function Home() {
           <div
             className={`flex gap-6 w-full ${userPlan ? "" : "justify-center"}`}
           >
+            {userPlan && <div>
             {editable ? (
               <button
                 className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
@@ -120,6 +131,8 @@ function Home() {
                 Edit plan
               </button>
             )}
+            </div>}
+            
             <button
               className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
               onClick={handleCreateNewPlan}
@@ -127,7 +140,10 @@ function Home() {
               Create a new plan
             </button>
             {userPlan && (
-              <button className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
+              <button
+                className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                onClick={handleDeleteButton}
+              >
                 Delete Plan
               </button>
             )}
