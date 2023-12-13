@@ -1,6 +1,6 @@
 import React from "react";
 
-function SelectionForm(content, label, name, onChange, options) {
+function SelectionForm({value, label, name, onChange, options}) {
   return (
     <>
       <label
@@ -14,7 +14,7 @@ function SelectionForm(content, label, name, onChange, options) {
         id={name}
         name={name}
         onChange={onChange}
-        value={content}
+        value={value}
       >
         <option value="">Select {label}</option>
         {options.map((option) => (

@@ -46,10 +46,8 @@ function Profile() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-
-    // Handle the response here...
   }
-
+  
   return (
     <>
       <div className="flex flex-col justify-center items-center m-20">
@@ -60,43 +58,41 @@ function Profile() {
           <h2 className="text-4xl font-light text-tertiary">
             Personal Information
           </h2>
-          {NumberForm(
-            age,
-            "Age",
-            "age",
-            (e) => Number(setAge(e.target.value)),
-            13,
-            100
-          )}
-          {SelectionForm(
-            sex,
-            "Sex",
-            "sex",
-            (e) => setSex(e.target.value),
-            sexOptions
-          )}
+          <NumberForm
+            name={"sex"}
+            value={"age"}
+            label={"Age"}
+            onChange={(e) => setAge(Number(e.target.value))}
+            min={13}
+            max={100}
+          />
+          <SelectionForm
+            value={sex}
+            label={"Sex"}
+            name={"sex"}
+            onChange={(e) => setSex(e.target.value)}
+            options={sexOptions}
+          />
           {errors.sex && <p className="text-red-500">{errors.sex}</p>}
-          <h2 className="text-4xl font-light text-tertiary pt-12">
-            Plan Preferences
-          </h2>
-          {SelectionForm(
-            goal,
-            "Goals",
-            "goal",
-            (e) => setGoal(e.target.value),
-            goalOptions
-          )}
+          <SelectionForm
+            value={goal}
+            label={"Goal"}
+            name={"goal"}
+            onChange={(e) => setGoal(e.target.value)}
+            options={goalOptions}
+          />
           {errors.goal && <p className="text-red-500">{errors.goal}</p>}
-          {SelectionForm(
-            experience,
-            "Experience",
-            "experience",
-            (e) => setExperience(e.target.value),
-            experienceOptions
-          )}
+          <SelectionForm
+            value={experience}
+            label={"Experience"}
+            name={"experience"}
+            onChange={(e) => setExperience(e.target.value)}
+            options={experienceOptions}
+          />
           {errors.experience && (
             <p className="text-red-500">{errors.experience}</p>
           )}
+        
           <button
             type="submit"
             className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white"
