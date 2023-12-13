@@ -16,7 +16,7 @@ function PlanInfo() {
   return (
     <div className="flex flex-col justify-center items-center m-20">
       <form onSubmit={goToNewPlan} className="flex flex-col items-start w-1/2">
-        <h2 className="text-4xl font-light text-tertiary">
+        <h2 className="text-5xl mb-10 font-light text-text">
           Plan Information
         </h2>
         <NumberForm
@@ -45,7 +45,7 @@ function PlanInfo() {
         />
         <button
           type="submit"
-          className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white"
+          className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white hover:bg-tertiary transition ease-in duration-200"
         >
           Submit
         </button>

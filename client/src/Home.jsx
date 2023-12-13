@@ -49,7 +49,8 @@ function Home() {
       if (confirm) {
         deletePlan();
       }
-    } else navigate("/plan_info");
+    }
+    navigate("/plan_info");
   };
 
   async function editPlan() {
@@ -118,14 +119,14 @@ function Home() {
             {userPlan && <div>
             {editable ? (
               <button
-                className="bg-primary px-3 h-12 rounded-lg text-xl text-white hover:text-white hover:bg-secondary transition"
+                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
                 onClick={editPlan}
               >
                 Save Plan
               </button>
             ) : (
               <button
-                className="bg-secondary px-3 h-12 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
+                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
                 onClick={() => setEditable(true)}
               >
                 Edit plan
@@ -134,14 +135,14 @@ function Home() {
             </div>}
             
             <button
-              className="flex items-center bg-secondary h-12 px-3 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
+              className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
               onClick={handleCreateNewPlan}
             >
               Create a new plan
             </button>
             {userPlan && (
               <button
-                className="flex items-center bg-secondary h-12 px-3 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
+                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
                 onClick={handleDeleteButton}
               >
                 Delete Plan
