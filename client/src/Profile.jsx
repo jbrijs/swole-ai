@@ -47,7 +47,7 @@ function Profile() {
       },
     });
   }
-  
+
   return (
     <>
       <div className="flex flex-col justify-center items-center m-20">
@@ -55,7 +55,7 @@ function Profile() {
           onSubmit={createProfile}
           className="flex flex-col items-start w-1/2"
         >
-          <h2 className="text-4xl font-light text-tertiary">
+          <h2 className="text-4xl font-light text-text my-10">
             Personal Information
           </h2>
           <NumberForm
