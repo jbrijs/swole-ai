@@ -7,8 +7,8 @@ function NavButtons({ currentWeek, setCurrentWeek, savePlan, numWeeks, canSave }
     <div className="flex w-full justify-end items-center gap-8">
       <div className="flex gap-2">
         <button
-          className={`flex flex-row items-center justify-center bg-primary px-3 h-12 rounded-3xl text-xl text-black hover:text-white hover:bg-secondary transition ${
-            currentWeek <= 0 ? "opacity-50 cursor-not-allowed" : ""
+          className={`flex flex-row items-center justify-center bg-secondary px-3 h-12 rounded-3xl text-xl text-white hover:bg-tertiary transition ease duration-300 ${
+            currentWeek <= 0 ? "opacity-70 cursor-not-allowed" : ""
           }`}
           onClick={() => currentWeek > 0 && setCurrentWeek(currentWeek - 1)}
           disabled={currentWeek <= 0}
@@ -17,8 +17,8 @@ function NavButtons({ currentWeek, setCurrentWeek, savePlan, numWeeks, canSave }
           <KeyboardArrowLeftIcon />
         </button>
         <button
-          className={`flex flex-row items-center justify-center bg-primary px-3 h-12 rounded-3xl text-xl text-black hover:text-white hover:bg-secondary transition ${
-            currentWeek >= numWeeks - 1 ? "opacity-50 cursor-not-allowed" : ""
+          className={`flex flex-row items-center justify-center bg-secondary px-3 h-12 rounded-3xl text-xl text-white hover:bg-tertiary transition ease duration-300 ${
+            currentWeek >= numWeeks - 1 ? "opacity-70 cursor-not-allowed" : ""
           }`}
           onClick={() =>
             currentWeek < numWeeks - 1 && setCurrentWeek(currentWeek + 1)
@@ -31,7 +31,7 @@ function NavButtons({ currentWeek, setCurrentWeek, savePlan, numWeeks, canSave }
       </div>
 
       {canSave && <button
-        className="flex flex-row items-center justify-center bg-primary px-3 h-12 rounded-2xl text-xl text-black hover:text-white hover:bg-secondary transition"
+        className="h-12 bg-secondary rounded-xl px-8 text-white hover:bg-tertiary transition ease-in duration-200"
         onClick={savePlan}
         type="submit"
       >
