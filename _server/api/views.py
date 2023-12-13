@@ -62,6 +62,7 @@ def create_plan(req):
                         name=exercise_data['name'],
                         sets=exercise_data['sets'],
                         reps=exercise_data['reps'],
+                        weight=exercise_data['weight'],
                         day=day
                     )
         plan.save()

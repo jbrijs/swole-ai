@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseInput from "./ExerciseInput";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import cookie from "cookie";
-
+import { Navigate } from "react-router-dom";
 
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
@@ -31,6 +31,7 @@ function NewPlan() {
     initializePlan(numWeeks, daysPerWeek, exercisesPerDay)
   );
   const [currentWeek, setCurrentWeek] = useState(0);
+  const navigate = useNavigate();
 
   async function createPlan(e) {
     e.preventDefault();
@@ -43,7 +44,9 @@ function NewPlan() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
+    navigate("/")
   }
+  
 
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
