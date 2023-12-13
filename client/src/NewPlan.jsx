@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseInput from "./ExerciseInput";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import cookie from "cookie";
-import { Navigate } from "react-router-dom";
 import NavButtons from "./NavButtons";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {

@@ -3,8 +3,8 @@ import React from "react";
 function ExerciseInput({ exercise, onChange, editable }) {
   let className = "";
   editable
-    ? (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-50 py-1")
-    : (className = "w-1/4 text-center border border-gray-600 bg-slate-200 py-1");
+    ? (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 py-1")
+    : (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 py-1");
 
   return (
     <div>
