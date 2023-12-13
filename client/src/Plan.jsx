@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import ExerciseInput from "./ExerciseInput";
 
-function Plan({ userPlan, editable, handleExerciseChange }) {
-  const [currentWeek, setCurrentWeek] = useState(0);
+function Plan({ userPlan, editable, handleExerciseChange, currentWeek }) {
+  
  
 
   
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-10">
-        <div key={currentWeek} className="w-3/4">
+      <div className="flex flex-col justify-center items-center mt-10 w-full">
+        <div key={currentWeek} className="w-full">
           <h1 className="text-3xl font-light text-white mb-4" key={currentWeek}>
             Week {currentWeek + 1}
           </h1>

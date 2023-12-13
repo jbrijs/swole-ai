@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Plan from "./Plan";
 import cookie from "cookie";
+import NavButtons from "./NavButtons";
 
 function Home() {
   const [userName, setUserName] = useState("User!");
   const [userPlan, setUserPlan] = useState(null);
   const [editable, setEditable] = useState(false);
+  const [numWeeks, setNumWeeks] = useState(0);
+  const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
 
   async function getUserName() {
@@ -24,6 +27,7 @@ function Home() {
     });
     const body = await res.json();
     setUserPlan(body.plan);
+    setNumWeeks(body.plan.weeks.length);
   }
 
   async function deletePlan() {
@@ -45,7 +49,7 @@ function Home() {
       if (confirm) {
         deletePlan();
       }
-    }
+    } else navigate("/plan_info");
   };
 
   async function editPlan() {
@@ -58,7 +62,7 @@ function Home() {
       },
       body: JSON.stringify(userPlan),
     });
-    setEditable(false)
+    setEditable(false);
   }
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
@@ -91,32 +95,63 @@ function Home() {
   }, []);
 
   return (
-    <>
+    <div className="w-full flex flex-col items-center">
       <h1 className="text-5xl text-white my-20">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
-      <div className="flex flex-row items-center justify-center gap-3 mb-20">
-        {editable ? (
-          <button className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition" onClick={editPlan}>
-            Save Plan
-          </button>
-        ) : (
-          <button
-            className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-            onClick={() => setEditable(true)}
+      <div className="flex flex-row items-center justify-center gap-3 mb-20"></div>
+      <div className="w-3/4">
+        <div className="flex flex-row items-center">
+          <div
+            className={`flex gap-6 w-full ${userPlan ? "" : "justify-center"}`}
           >
-            Edit plan
-          </button>
+            {editable ? (
+              <button
+                className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                onClick={editPlan}
+              >
+                Save Plan
+              </button>
+            ) : (
+              <button
+                className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                onClick={() => setEditable(true)}
+              >
+                Edit plan
+              </button>
+            )}
+            <button
+              className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+              onClick={handleCreateNewPlan}
+            >
+              Create a new plan
+            </button>
+            {userPlan && (
+              <button className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition">
+                Delete Plan
+              </button>
+            )}
+          </div>
+
+          {userPlan && (
+            <NavButtons
+              numWeeks={numWeeks}
+              currentWeek={currentWeek}
+              setCurrentWeek={setCurrentWeek}
+            />
+          )}
+        </div>
+
+        {userPlan && (
+          <Plan
+            userPlan={userPlan}
+            editable={editable}
+            handleExerciseChange={handleExerciseChange}
+            currentWeek={currentWeek}
+          ></Plan>
         )}
-        <button
-          className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-          onClick={handleCreateNewPlan}
-        >
-          Create a new plan
-        </button>
       </div>
-      {userPlan && <Plan userPlan={userPlan} editable={editable} handleExerciseChange={handleExerciseChange}></Plan>}
-    </>
+    </div>
   );
 }
 

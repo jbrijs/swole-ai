@@ -5,10 +5,11 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import cookie from "cookie";
 import { Navigate } from "react-router-dom";
+import NavButtons from "./NavButtons";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
-    name: "", // You can allow users to set this name
+    name: "",
     weeks: Array.from({ length: numWeeks }, (_, weekIndex) => ({
       days: Array.from({ length: daysPerWeek }, (_, dayIndex) => ({
         name: `Day ${dayIndex + 1}`,
@@ -72,91 +73,75 @@ function NewPlan() {
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center">
-        <form
-          className="flex flex-col justify-center items-center mt-10"
-          onSubmit={createPlan}
-        >
-          <div key={currentWeek}>
+    <div className="flex flex-col h-full items-center justify-center w-full">
+      <form className="w-3/4 my-10" onSubmit={createPlan}>
+        <h1 className="text-5xl font-light text-white mb-10" key={currentWeek}>
+          Week {currentWeek + 1}
+        </h1>
+        <NavButtons 
+          currentWeek={currentWeek}
+          setCurrentWeek={setCurrentWeek}
+          savePlan={createPlan}
+          numWeeks={numWeeks}
+          canSave={true}
+        />
+        {plan.weeks[currentWeek].days.map((day, dayIndex) => (
+          <div key={dayIndex}>
             <h1
-              className="text-5xl font-light text-white mb-10"
-              key={currentWeek}
+              className="text-2xl font-light text-tertiary pb-2 pt-6"
+              key={dayIndex}
             >
-              Week {currentWeek + 1}
+              Day {dayIndex + 1}
             </h1>
-            {plan.weeks[currentWeek].days.map((day, dayIndex) => (
-              <div key={dayIndex}>
-                <h1
-                  className="text-2xl font-light text-tertiary pb-2 pt-6"
-                  key={dayIndex}
-                >
-                  Day {dayIndex + 1}
-                </h1>
-                <div className="flex flex-row items-center">
-                  <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
-                    Exercise
-                  </p>
-                  <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
-                    Sets
-                  </p>
-                  <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
-                    Reps
-                  </p>
-                  <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
-                    Weight
-                  </p>
-                </div>
-                {day.exercises.map((exercise, exerciseIndex) => (
-                  <ExerciseInput
-                    key={exerciseIndex}
-                    exercise={exercise}
-                    onChange={(e) =>
-                      handleExerciseChange(
-                        currentWeek,
-                        dayIndex,
-                        exerciseIndex,
-                        e
-                      )
-                    }
-                    editable={true}
-                  />
-                ))}
-              </div>
+            <div className="flex flex-row items-center">
+              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+                Exercise
+              </p>
+              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+                Sets
+              </p>
+              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+                Reps
+              </p>
+              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+                Weight
+              </p>
+            </div>
+            {day.exercises.map((exercise, exerciseIndex) => (
+              <ExerciseInput
+                key={exerciseIndex}
+                exercise={exercise}
+                onChange={(e) =>
+                  handleExerciseChange(currentWeek, dayIndex, exerciseIndex, e)
+                }
+                editable={true}
+              />
             ))}
           </div>
-          {currentWeek + 1 == numWeeks && (
-            <button
-              className="bg-primary px-3 mt-10 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-              type="submit"
-            >
-              Submit Plan
-            </button>
-          )}
-        </form>
-        <div className="relative h-20 w-1/2 mt-10">
-          {currentWeek > 0 && (
-            <button
-              onClick={() => setCurrentWeek(currentWeek - 1)}
-              className="flex flex-row items-center justify-center absolute left-0 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-            >
-              <KeyboardArrowLeftIcon />
-              Week {currentWeek}
-            </button>
-          )}
-          {currentWeek < numWeeks - 1 && (
-            <button
-              onClick={() => setCurrentWeek(currentWeek + 1)}
-              className="flex flex-row items-center justify-center absolute right-0 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-            >
-              Week {currentWeek + 2}
-              <KeyboardArrowRightIcon />
-            </button>
-          )}
-        </div>
-      </div>
-    </>
+        ))}
+      </form>
+
+     
+    </div>
   );
 }
-
 export default NewPlan;
+
+ {/* {currentWeek > 0 && (
+          <button
+            onClick={() => setCurrentWeek(currentWeek - 1)}
+            className="flex flex-row items-center justify-center absolute left-80 bottom-3/4 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+          >
+            <KeyboardArrowLeftIcon />
+            Week {currentWeek}
+          </button>
+        )}
+        {currentWeek < numWeeks - 1 && (
+          <button
+            onClick={() => setCurrentWeek(currentWeek + 1)}
+            className="flex flex-row items-center justify-center absolute right-80 bottom-3/4 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+          >
+            Week {currentWeek + 2}
+            <KeyboardArrowRightIcon />
+          </button>
+        )} */}
