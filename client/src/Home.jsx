@@ -106,7 +106,7 @@ function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-5xl text-white my-20">
+      <h1 className="text-5xl text-textgt my-20">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
       <div className="flex flex-row items-center justify-center gap-3 mb-20"></div>
@@ -118,14 +118,14 @@ function Home() {
             {userPlan && <div>
             {editable ? (
               <button
-                className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                className="bg-primary px-3 h-12 rounded-lg text-xl text-white hover:text-white hover:bg-secondary transition"
                 onClick={editPlan}
               >
                 Save Plan
               </button>
             ) : (
               <button
-                className="bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                className="bg-secondary px-3 h-12 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
                 onClick={() => setEditable(true)}
               >
                 Edit plan
@@ -134,14 +134,14 @@ function Home() {
             </div>}
             
             <button
-              className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+              className="flex items-center bg-secondary h-12 px-3 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
               onClick={handleCreateNewPlan}
             >
               Create a new plan
             </button>
             {userPlan && (
               <button
-                className="flex items-center bg-primary h-12 px-3 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
+                className="flex items-center bg-secondary h-12 px-3 rounded-lg text-xl text-white hover:text-white hover:bg-tertiary transition ease-in duration-200"
                 onClick={handleDeleteButton}
               >
                 Delete Plan

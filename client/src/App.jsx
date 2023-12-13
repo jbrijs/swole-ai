@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <nav className="flex flex-row justify-end items-center h-16 shadow-lg top-0 left-0 gap-10">
+      <nav className="bg-primary flex flex-row justify-end items-center h-16 shadow-lg top-0 left-0 gap-10">
         <Link
           className="text-xl text-white font-light hover:underline underline-offset-4 decoration-1 decoration-accent"
           to="/profile"
