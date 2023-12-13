@@ -8,7 +8,8 @@ export default {
         secondary: "#3E7A56",
         tertiary: "#0081A7",
         accent: "#F26419",
-        text: "#3A2E39"
+        text: "#3A2E39", 
+        background: "#D3D3D3"
       },
     },
   },

@@ -75,7 +75,7 @@ function NewPlan() {
   return (
     <div className="flex flex-col h-full items-center justify-center w-full">
       <form className="w-3/4 my-10" onSubmit={createPlan}>
-        <h1 className="text-5xl font-light text-white mb-10" key={currentWeek}>
+        <h1 className="text-5xl font-light text-text my-10" key={currentWeek}>
           Week {currentWeek + 1}
         </h1>
         <NavButtons 
@@ -88,22 +88,22 @@ function NewPlan() {
         {plan.weeks[currentWeek].days.map((day, dayIndex) => (
           <div key={dayIndex}>
             <h1
-              className="text-2xl font-light text-tertiary pb-2 pt-6"
+              className="text-2xl text-text pb-2 pt-6"
               key={dayIndex}
             >
               Day {dayIndex + 1}
             </h1>
             <div className="flex flex-row items-center">
-              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
                 Exercise
               </p>
-              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-l-2 border-r-2 border-background">
                 Sets
               </p>
-              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-r-2 border-background">
                 Reps
               </p>
-              <p className="w-1/4 text-center text-xl text-gray-700 font-semibold bg-secondary">
+              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
                 Weight
               </p>
             </div>
