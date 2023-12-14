@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import TextForm from "./TextForm";
 import NumberForm from "./NumberForm";
 import { sexOptions, goalOptions, experienceOptions } from "./utils/options";
 import SelectionForm from "./SelectionForm";
 import cookie from "cookie";
 import Infobox from "./Infobox";
+import {useNavigate} from "react-router-dom"
 
 function Profile() {
   const [age, setAge] = useState(13);
@@ -12,6 +12,8 @@ function Profile() {
   const [goal, setGoal] = useState("");
   const [experience, setExperience] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate()
+  
 
   async function createProfile(e) {
     e.preventDefault();
@@ -46,6 +48,7 @@ function Profile() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
+    navigate("/")
   }
 
   return (
@@ -60,7 +63,7 @@ function Profile() {
           </h2>
           <NumberForm
             name={"sex"}
-            value={"age"}
+            value={age}
             label={"Age"}
             onChange={(e) => setAge(Number(e.target.value))}
             min={13}
@@ -97,7 +100,7 @@ function Profile() {
             type="submit"
             className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white"
           >
-            Submit
+            Save
           </button>
         </form>
         {Infobox()}

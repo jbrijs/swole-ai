@@ -28,13 +28,17 @@ def index(req):
 @login_required
 def set_profile(req):
     body = json.loads(req.body)
-    profile = Profile(
-        age = body['age'],
-        sex = body['sex'],
-        goal = body['goal'],
-        experience = body['experience'],
-        user=req.user
-    )
+
+    # Try to get the existing profile, if it exists
+    profile, created = Profile.objects.get_or_create(user=req.user)
+
+    # Update fields regardless of whether it was created or fetched
+    profile.age = body['age']
+    profile.sex = body['sex']
+    profile.goal = body['goal']
+    profile.experience = body['experience']
 
     profile.save()
+    
     return JsonResponse({"profile": model_to_dict(profile)})
+
