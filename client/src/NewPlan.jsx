@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseInput from "./ExerciseInput";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
+import ErrorMessage from "./ErrorMessage";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -29,7 +30,7 @@ function NewPlan() {
   );
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null);
 
   async function createPlan(e) {
     e.preventDefault();
@@ -45,11 +46,9 @@ function NewPlan() {
     if (res.ok) {
       navigate("/");
     } else {
-      const errorData = await res.json()
-      console.log(errorData.error)
-      // setErrorMessage(body.error)
-      
-
+      const errorData = await res.json();
+      console.log(errorData.error);
+      setErrorMessage(errorData.error);
     }
   }
 
@@ -79,51 +78,62 @@ function NewPlan() {
   };
 
   return (
-    <div className="flex flex-col h-full items-center justify-center w-full">
-      <form className="w-3/4 my-10" onSubmit={createPlan}>
-        <h1 className="text-5xl font-light text-text my-10" key={currentWeek}>
-          Week {currentWeek + 1}
-        </h1>
-        <NavButtons
-          currentWeek={currentWeek}
-          setCurrentWeek={setCurrentWeek}
-          savePlan={createPlan}
-          numWeeks={numWeeks}
-          canSave={true}
-        />
-        {plan.weeks[currentWeek].days.map((day, dayIndex) => (
-          <div key={dayIndex}>
-            <h1 className="text-2xl text-text pb-2 pt-6" key={dayIndex}>
-              Day {dayIndex + 1}
-            </h1>
-            <div className="flex flex-row items-center">
-              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
-                Exercise
-              </p>
-              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-l-2 border-r-2 border-background">
-                Sets
-              </p>
-              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-r-2 border-background">
-                Reps
-              </p>
-              <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
-                Weight
-              </p>
-            </div>
-            {day.exercises.map((exercise, exerciseIndex) => (
-              <ExerciseInput
-                key={exerciseIndex}
-                exercise={exercise}
-                onChange={(e) =>
-                  handleExerciseChange(currentWeek, dayIndex, exerciseIndex, e)
-                }
-                editable={true}
-              />
-            ))}
+    <>
+      <div className="flex flex-col h-full items-center justify-center w-full">
+        <form className="w-3/4 my-10" onSubmit={createPlan}>
+          <h1 className="text-5xl font-light text-text my-10" key={currentWeek}>
+            Week {currentWeek + 1}
+          </h1>
+          <div className="h-4">
+            {errorMessage && <ErrorMessage message={errorMessage} />}
           </div>
-        ))}
-      </form>
-    </div>
+
+          <NavButtons
+            currentWeek={currentWeek}
+            setCurrentWeek={setCurrentWeek}
+            savePlan={createPlan}
+            numWeeks={numWeeks}
+            canSave={true}
+          />
+          {plan.weeks[currentWeek].days.map((day, dayIndex) => (
+            <div key={dayIndex}>
+              <h1 className="text-2xl text-text pb-2 pt-6" key={dayIndex}>
+                Day {dayIndex + 1}
+              </h1>
+              <div className="flex flex-row items-center">
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
+                  Exercise
+                </p>
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-l-2 border-r-2 border-background">
+                  Sets
+                </p>
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-r-2 border-background">
+                  Reps
+                </p>
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
+                  Weight
+                </p>
+              </div>
+              {day.exercises.map((exercise, exerciseIndex) => (
+                <ExerciseInput
+                  key={exerciseIndex}
+                  exercise={exercise}
+                  onChange={(e) =>
+                    handleExerciseChange(
+                      currentWeek,
+                      dayIndex,
+                      exerciseIndex,
+                      e
+                    )
+                  }
+                  editable={true}
+                />
+              ))}
+            </div>
+          ))}
+        </form>
+      </div>
+    </>
   );
 }
 export default NewPlan;

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Plan from "./Plan";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
+import ErrorMessage from "./ErrorMessage";
 
 function Home() {
   const [userName, setUserName] = useState("User!");
@@ -11,6 +12,7 @@ function Home() {
   const [editable, setEditable] = useState(false);
   const [numWeeks, setNumWeeks] = useState(0);
   const [currentWeek, setCurrentWeek] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   async function getUserName() {
@@ -63,7 +65,13 @@ function Home() {
       },
       body: JSON.stringify(userPlan),
     });
-    setEditable(false);
+    if (res.ok){
+      setEditable(false);
+    } else {
+      const errorMessage = await res.json()
+      setErrorMessage(errorMessage.error)
+    }
+    
   }
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
@@ -158,7 +166,10 @@ function Home() {
             />
           )}
         </div>
-
+        <div className="h-4 mt-8">
+          {(editable && errorMessage) && <ErrorMessage
+          message={errorMessage}/>}
+        </div>
         {userPlan && (
           <Plan
             userPlan={userPlan}
