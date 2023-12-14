@@ -25,6 +25,7 @@ function ExerciseInput({ exercise, onChange, editable }) {
         onChange={onChange}
         className={className}
         readOnly={!editable}
+        min={0}
       />
       <input
         type="number"
@@ -34,6 +35,7 @@ function ExerciseInput({ exercise, onChange, editable }) {
         onChange={onChange}
         className={className}
         readOnly={!editable}
+        min={0}
       />
       <input
         type="number"
@@ -43,6 +45,7 @@ function ExerciseInput({ exercise, onChange, editable }) {
         onChange={onChange}
         className={className}
         readOnly={!editable}
+        min={0}
       />
     </div>
   );

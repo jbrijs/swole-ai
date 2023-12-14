@@ -29,6 +29,7 @@ function NewPlan() {
   );
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null)
 
   async function createPlan(e) {
     e.preventDefault();
@@ -41,7 +42,15 @@ function NewPlan() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-    navigate("/");
+    if (res.ok) {
+      navigate("/");
+    } else {
+      const errorData = await res.json()
+      console.log(errorData.error)
+      // setErrorMessage(body.error)
+      
+
+    }
   }
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
@@ -75,7 +84,7 @@ function NewPlan() {
         <h1 className="text-5xl font-light text-text my-10" key={currentWeek}>
           Week {currentWeek + 1}
         </h1>
-        <NavButtons 
+        <NavButtons
           currentWeek={currentWeek}
           setCurrentWeek={setCurrentWeek}
           savePlan={createPlan}
@@ -84,10 +93,7 @@ function NewPlan() {
         />
         {plan.weeks[currentWeek].days.map((day, dayIndex) => (
           <div key={dayIndex}>
-            <h1
-              className="text-2xl text-text pb-2 pt-6"
-              key={dayIndex}
-            >
+            <h1 className="text-2xl text-text pb-2 pt-6" key={dayIndex}>
               Day {dayIndex + 1}
             </h1>
             <div className="flex flex-row items-center">
@@ -117,14 +123,13 @@ function NewPlan() {
           </div>
         ))}
       </form>
-
-     
     </div>
   );
 }
 export default NewPlan;
 
- {/* {currentWeek > 0 && (
+{
+  /* {currentWeek > 0 && (
           <button
             onClick={() => setCurrentWeek(currentWeek - 1)}
             className="flex flex-row items-center justify-center absolute left-80 bottom-3/4 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
@@ -141,4 +146,5 @@ export default NewPlan;
             Week {currentWeek + 2}
             <KeyboardArrowRightIcon />
           </button>
-        )} */}
+        )} */
+}
