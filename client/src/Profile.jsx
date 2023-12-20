@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NumberForm from "./NumberForm";
 import { sexOptions, goalOptions, experienceOptions } from "./utils/options";
 import SelectionForm from "./SelectionForm";
 import cookie from "cookie";
 import Infobox from "./Infobox";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const [age, setAge] = useState(13);
@@ -12,28 +12,41 @@ function Profile() {
   const [goal, setGoal] = useState("");
   const [experience, setExperience] = useState("");
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
+  async function getProfile() {
+    const res = await fetch("/get_profile", {
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+        "Content-Type": "application/json",
+      },
+    });
+    const body = await res.json();
+    const profile = body.profile;
+    console.log(body.profile.age);
+    setAge(profile.age);
+    setSex(profile.sex);
+    setExperience(profile.experience);
+    setGoal(profile.goal);
+  }
 
   async function createProfile(e) {
     e.preventDefault();
 
-    // Check if any of the selection fields have their default empty string value
     let newErrors = {};
 
-    // Add an error message if a selection field has no value
     if (!sex) newErrors.sex = "Please select a sex.";
     if (!goal) newErrors.goal = "Please select a goal.";
     if (!experience)
       newErrors.experience = "Please select your experience level.";
 
-    // If there are any errors, set the errors state and stop the function
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    // If validation passes, proceed with the fetch request
     const res = await fetch("/profile/", {
       method: "post",
       credentials: "same-origin",
@@ -48,8 +61,12 @@ function Profile() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-    navigate("/")
+    navigate("/");
   }
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <>
@@ -65,7 +82,10 @@ function Profile() {
             name={"sex"}
             value={age}
             label={"Age"}
-            onChange={(e) => setAge(Number(e.target.value))}
+            onChange={(e) => {
+              const newValue = e.target.value;
+              setAge(newValue === "" ? "" : Number(newValue));
+            }}
             min={13}
             max={100}
           />
@@ -95,7 +115,7 @@ function Profile() {
           {errors.experience && (
             <p className="text-red-500">{errors.experience}</p>
           )}
-        
+
           <button
             type="submit"
             className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white"
@@ -103,7 +123,7 @@ function Profile() {
             Save
           </button>
         </form>
-        {Infobox()}
+        <Infobox />
       </div>
     </>
   );
