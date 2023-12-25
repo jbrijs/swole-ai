@@ -79,7 +79,7 @@ function Profile() {
             Personal Information
           </h2>
           <NumberForm
-            name={"sex"}
+            name={"age"}
             value={age}
             label={"Age"}
             onChange={(e) => {
