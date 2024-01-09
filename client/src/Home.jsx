@@ -54,6 +54,10 @@ function Home() {
     }
     navigate("/plan_info");
   };
+  
+  const handleGeneratePlan = () => {
+    // const res = await fetch("/api/")
+  }
 
   async function editPlan() {
     const res = await fetch("/api/edit_plan", {
@@ -146,7 +150,13 @@ function Home() {
               className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
               onClick={handleCreateNewPlan}
             >
-              Create a new plan
+              Manually create a plan
+            </button>
+            <button
+              className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+              onClick={handleCreateNewPlan}
+            >
+              Generate a plan using AI
             </button>
             {userPlan && (
               <button
