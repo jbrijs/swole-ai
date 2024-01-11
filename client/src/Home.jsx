@@ -40,7 +40,6 @@ function Home() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       },
     });
-
   }
 
   const handleCreateNewPlan = () => {
@@ -54,9 +53,19 @@ function Home() {
     }
     navigate("/plan_info");
   };
-  
-  const handleGeneratePlan = () => {
-    // const res = await fetch("/api/")
+
+  async function generatePlan() {
+    const res = await fetch("/api/generate_plan", {
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+      },
+    });
+    const body = await res.json();
+    console.log(body)
+    setUserPlan(body.plan);
+    setNumWeeks(body.plan.weeks.length)
   }
 
   async function editPlan() {
@@ -69,13 +78,12 @@ function Home() {
       },
       body: JSON.stringify(userPlan),
     });
-    if (res.ok){
+    if (res.ok) {
       setEditable(false);
     } else {
-      const errorMessage = await res.json()
-      setErrorMessage(errorMessage.error)
+      const errorMessage = await res.json();
+      setErrorMessage(errorMessage.error);
     }
-    
   }
 
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
@@ -108,7 +116,7 @@ function Home() {
     );
     if (confirm) {
       deletePlan();
-      setUserPlan(null)
+      setUserPlan(null);
     }
   };
 
@@ -128,24 +136,26 @@ function Home() {
           <div
             className={`flex gap-6 w-full ${userPlan ? "" : "justify-center"}`}
           >
-            {userPlan && <div>
-            {editable ? (
-              <button
-                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                onClick={editPlan}
-              >
-                Save Plan
-              </button>
-            ) : (
-              <button
-                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                onClick={() => setEditable(true)}
-              >
-                Edit plan
-              </button>
+            {userPlan && (
+              <div>
+                {editable ? (
+                  <button
+                    className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                    onClick={editPlan}
+                  >
+                    Save Plan
+                  </button>
+                ) : (
+                  <button
+                    className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                    onClick={() => setEditable(true)}
+                  >
+                    Edit plan
+                  </button>
+                )}
+              </div>
             )}
-            </div>}
-            
+
             <button
               className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
               onClick={handleCreateNewPlan}
@@ -154,14 +164,14 @@ function Home() {
             </button>
             <button
               className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-              onClick={handleCreateNewPlan}
+              onClick={generatePlan}
             >
               Generate a plan using AI
             </button>
             {userPlan && (
               <button
                 className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                onClick={handleDeleteButton}
+                onClick={deletePlan}
               >
                 Delete Plan
               </button>
@@ -177,8 +187,7 @@ function Home() {
           )}
         </div>
         <div className="h-4 mt-8">
-          {(editable && errorMessage) && <ErrorMessage
-          message={errorMessage}/>}
+          {editable && errorMessage && <ErrorMessage message={errorMessage} />}
         </div>
         {userPlan && (
           <Plan

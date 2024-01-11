@@ -23,3 +23,12 @@ def run_assistant(thread):
     assistant_id=ASSISTANT_ID
     )   
     return run
+
+def check_run_status(thread_id, run_id):
+    run = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
+    return run.status
+
+def get_last_message(thread_id):
+    messages = client.beta.threads.messages.list(thread_id=thread_id)
+    return (messages.data[-1].content)
+

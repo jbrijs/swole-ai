@@ -8,7 +8,8 @@ from .models import Plan, Week, Day, Exercise
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-from .services import create_thread, add_message, run_assistant
+from .services import check_run_status, create_thread, add_message, get_last_message, run_assistant
+import time
 
 @login_required
 def get_first_name(req):
@@ -134,19 +135,23 @@ def edit_plan(request):
 @login_required
 def get_ai_plan(req):
     user = req.user
-    user_name = req.user.first
+    user_name = req.user.first_name
     profile = user.profile
     sex = profile.sex
     age = profile.age
     goal = profile.goal
+    experience = profile.experience
 
-    user_data = {'user_name': user_name,
-                 'sex': sex,
-                 'age': age,
-                 'goal': goal}
+    user_data = f"User Name: {user_name}, Sex: {sex}, Age: {age}, Goal: {goal}, Experience: {experience}"
 
     thread = create_thread()
     add_message(thread=thread, user_data=user_data)
-    plan = run_assistant(thread=thread)
-
-    return JsonResponse(plan)
+    run = run_assistant(thread=thread)
+    while True:
+        status = check_run_status(thread.id, run.id)
+        if status == "completed":
+            break
+        time.sleep(1)
+    plan = get_last_message(thread.id)
+    print(f"Returned: {plan}")
+    return JsonResponse({'plan': plan})
