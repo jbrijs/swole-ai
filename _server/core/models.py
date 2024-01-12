@@ -26,6 +26,6 @@ class Profile(models.Model):
         MUSCLE_GAIN = 'M', 'Muscle gain'
     goal = models.CharField(max_length=1, choices=Goal.choices)
 
-    thread_id = models.CharField()
+    thread_id = models.CharField(max_length=100, blank=True)
 
 

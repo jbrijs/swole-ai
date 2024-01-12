@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .services import check_run_status, create_thread, add_message, get_last_message, run_assistant
-import time
 
 @login_required
 def get_first_name(req):
@@ -131,9 +130,29 @@ def edit_plan(request):
                         exercise.save()
 
         return JsonResponse({'message': 'Plan updated successfully'}, status=200)
-
+    
 @login_required
 def get_ai_plan(req):
+    ''' 
+    Gets user info and makes a thread if the user doesn't
+    have a thread id attached to their profile.
+    Adds a message to the thread, starts the run, 
+    and the returns the last message in the thread (which should be the plan).
+    '''
+
+    user = req.user
+    user_data = get_profile_data(req)
+    user_thread_id = get_thread_id(req)
+
+    if user_thread_id:
+        return process_user_interaction(user_thread_id, user_data)
+    else:
+        new_thread = create_thread()
+        user.thread_id = new_thread.id
+        return process_user_interaction(new_thread.id, user_data)
+
+@login_required
+def get_profile_data(req):
     user = req.user
     user_name = req.user.first_name
     profile = user.profile
@@ -141,17 +160,40 @@ def get_ai_plan(req):
     age = profile.age
     goal = profile.goal
     experience = profile.experience
+    return f"User Name: {user_name}, Sex: {sex}, Age: {age}, Goal: {goal}, Experience: {experience}"
 
-    user_data = f"User Name: {user_name}, Sex: {sex}, Age: {age}, Goal: {goal}, Experience: {experience}"
+@login_required
+def get_thread_id(req):
+    return req.user.profile.thread_id
+    
+def process_user_interaction(thread_id, user_data):
+    """
+    Handles interaction with the OpenAI assistant for a given thread.
+    It sends a message to the thread, runs the assistant, checks the run status,
+    and retrieves the last message as the plan.
+    
+    Parameters:
+        thread_id (str): The ID of the thread for the interaction.
+        user_data (dict): Data about the user to send to the assistant.
 
-    thread = create_thread()
-    add_message(thread=thread, user_data=user_data)
-    run = run_assistant(thread=thread)
-    while True:
-        status = check_run_status(thread.id, run.id)
-        if status == "completed":
-            break
-        time.sleep(1)
-    plan = get_last_message(thread.id)
-    print(f"Returned: {plan}")
-    return JsonResponse({'plan': plan})
+    Returns:
+        JsonResponse: The response containing the plan or an error message.
+    """
+    add_message(thread_id=thread_id, user_data=user_data)
+    run = run_assistant(thread_id)
+
+    run_status = check_run_status(thread_id=thread_id, run_id=run.id)
+    if run_status == "completed":
+        plan = get_last_message(thread_id=thread_id)
+        print(plan)
+        try:
+            plan_json = json.loads(plan)
+            return JsonResponse({'plan':plan_json})
+        except json.JSONDecodeError as e:
+            print("Error decoding JSON:", e)
+            return JsonResponse({'error': 'error decoding json'}, status=500)
+
+    else:
+        return JsonResponse({'error': run_status}, status=500)
+
+    
