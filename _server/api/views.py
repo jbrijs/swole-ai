@@ -149,24 +149,24 @@ def get_ai_plan(req):
     else:
         new_thread = create_thread()
         user.thread_id = new_thread.id
-        return process_user_interaction(new_thread.id, user_data)
+        return process_user_interaction(new_thread.id, user_data, user)
 
 @login_required
 def get_profile_data(req):
     user = req.user
     user_name = req.user.first_name
     profile = user.profile
-    sex = profile.sex
+    sex = profile.get_sex_display()
+    goal = profile.get_goal_display()
+    experience = profile.get_experience_display()
     age = profile.age
-    goal = profile.goal
-    experience = profile.experience
-    return f"User Name: {user_name}, Sex: {sex}, Age: {age}, Goal: {goal}, Experience: {experience}"
+    return f"User Name: {user_name}, Sex: {sex}, Goal: {goal}, Experience: {experience}, Age: {age}"
 
 @login_required
 def get_thread_id(req):
     return req.user.profile.thread_id
     
-def process_user_interaction(thread_id, user_data):
+def process_user_interaction(thread_id, user_data, user):
     """
     Handles interaction with the OpenAI assistant for a given thread.
     It sends a message to the thread, runs the assistant, checks the run status,
@@ -188,6 +188,7 @@ def process_user_interaction(thread_id, user_data):
         print(plan)
         try:
             plan_json = json.loads(plan)
+            save_plan_to_profile(user, plan_json)
             return JsonResponse({'plan':plan_json})
         except json.JSONDecodeError as e:
             print("Error decoding JSON:", e)
@@ -196,4 +197,21 @@ def process_user_interaction(thread_id, user_data):
     else:
         return JsonResponse({'error': run_status}, status=500)
 
+def save_plan_to_profile(user, plan_data):
+    with transaction.atomic():
+        profile = user.profile
+        plan = Plan.objects.create(profile=profile)
     
+        for week_data in plan_data['weeks']:
+            week = Week.objects.create(plan=plan)
+            for day_data in week_data['days']:
+                day = Day.objects.create(name=day_data['name'], week=week)
+                for exercise_data in day_data['exercises']:
+                    Exercise.objects.create(
+                        name=exercise_data['name'],
+                        sets=exercise_data['sets'],
+                        reps=exercise_data['reps'],
+                        weight=exercise_data['weight'],
+                        day=day
+                    )
+        plan.save()
