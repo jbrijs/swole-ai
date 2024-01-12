@@ -5,6 +5,7 @@ import Plan from "./Plan";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
+import { Discuss } from "react-loader-spinner";
 
 function Home() {
   const [userName, setUserName] = useState("User!");
@@ -13,6 +14,7 @@ function Home() {
   const [numWeeks, setNumWeeks] = useState(0);
   const [currentWeek, setCurrentWeek] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   async function getUserName() {
@@ -55,6 +57,7 @@ function Home() {
   };
 
   async function generatePlan() {
+    setLoading(true);
     const res = await fetch("/api/generate_plan", {
       method: "GET",
       credentials: "same-origin",
@@ -63,9 +66,10 @@ function Home() {
       },
     });
     const body = await res.json();
-    console.log(body)
+    setLoading(false);
+    console.log(body);
     setUserPlan(body.plan);
-    setNumWeeks(body.plan.weeks.length)
+    setNumWeeks(body.plan.weeks.length);
   }
 
   async function editPlan() {
@@ -132,70 +136,85 @@ function Home() {
       </h1>
       <div className="flex flex-row items-center justify-center gap-3 mb-20"></div>
       <div className="w-3/4">
-        <div className="flex flex-row items-center">
-          <div
-            className={`flex gap-6 w-full ${userPlan ? "" : "justify-center"}`}
-          >
-            {userPlan && (
-              <div>
-                {editable ? (
+        {loading ? (
+          <div className="flex items-center justify-center">
+            <Discuss
+            height="200"
+            width="200"
+            />
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-row items-center">
+              <div
+                className={`flex gap-6 w-full ${
+                  userPlan ? "" : "justify-center"
+                }`}
+              >
+                {userPlan && (
+                  <div>
+                    {editable ? (
+                      <button
+                        className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                        onClick={editPlan}
+                      >
+                        Save Plan
+                      </button>
+                    ) : (
+                      <button
+                        className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                        onClick={() => setEditable(true)}
+                      >
+                        Edit plan
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                <button
+                  className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                  onClick={handleCreateNewPlan}
+                >
+                  Manually create a plan
+                </button>
+                <button
+                  className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                  onClick={generatePlan}
+                >
+                  Generate a plan using AI
+                </button>
+                {userPlan && (
                   <button
                     className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                    onClick={editPlan}
+                    onClick={deletePlan}
                   >
-                    Save Plan
-                  </button>
-                ) : (
-                  <button
-                    className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                    onClick={() => setEditable(true)}
-                  >
-                    Edit plan
+                    Delete Plan
                   </button>
                 )}
               </div>
-            )}
 
-            <button
-              className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-              onClick={handleCreateNewPlan}
-            >
-              Manually create a plan
-            </button>
-            <button
-              className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-              onClick={generatePlan}
-            >
-              Generate a plan using AI
-            </button>
+              {userPlan && (
+                <NavButtons
+                  numWeeks={numWeeks}
+                  currentWeek={currentWeek}
+                  setCurrentWeek={setCurrentWeek}
+                />
+              )}
+            </div>
+            <div className="h-4 mt-8">
+              {editable && errorMessage && (
+                <ErrorMessage message={errorMessage} />
+              )}
+            </div>
             {userPlan && (
-              <button
-                className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                onClick={deletePlan}
-              >
-                Delete Plan
-              </button>
+              <Plan
+                userPlan={userPlan}
+                editable={editable}
+                handleExerciseChange={handleExerciseChange}
+                currentWeek={currentWeek}
+              ></Plan>
             )}
-          </div>
-
-          {userPlan && (
-            <NavButtons
-              numWeeks={numWeeks}
-              currentWeek={currentWeek}
-              setCurrentWeek={setCurrentWeek}
-            />
-          )}
-        </div>
-        <div className="h-4 mt-8">
-          {editable && errorMessage && <ErrorMessage message={errorMessage} />}
-        </div>
-        {userPlan && (
-          <Plan
-            userPlan={userPlan}
-            editable={editable}
-            handleExerciseChange={handleExerciseChange}
-            currentWeek={currentWeek}
-          ></Plan>
+          </>
         )}
       </div>
     </div>
