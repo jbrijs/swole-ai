@@ -5,7 +5,8 @@ import Plan from "./Plan";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
-import { Discuss } from "react-loader-spinner";
+import PuffLoader from "react-spinners/PuffLoader";
+
 
 function Home() {
   const [userName, setUserName] = useState("User!");
@@ -138,9 +139,8 @@ function Home() {
       <div className="w-3/4">
         {loading ? (
           <div className="flex items-center justify-center">
-            <Discuss
-            height="200"
-            width="200"
+            <PuffLoader
+            color="#F26419"
             />
           </div>
         ) : (
