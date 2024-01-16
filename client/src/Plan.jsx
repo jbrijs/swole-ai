@@ -9,13 +9,13 @@ function Plan({ userPlan, editable, handleExerciseChange, currentWeek }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-10 w-full">
-        <div key={currentWeek} className="w-full">
+      <div className="flex flex-col justify-center items-center mt-10 mb-20 w-full">
+        <div key={currentWeek} className="w-full"> 
           <h1 className="text-3xl font-light text-text mb-4" key={currentWeek}>
             Week {currentWeek + 1}
           </h1>
           {userPlan.weeks[currentWeek].days.map((day, dayIndex) => (
-            <div key={dayIndex} className="w-full">
+            <div key={dayIndex} className="w-full my-8">
               <h1
                 className="text-xl text-text pb-2"
                 key={dayIndex}
