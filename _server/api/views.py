@@ -11,9 +11,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from .services import check_run_status, create_thread, add_message, get_last_message, run_assistant
 
 @login_required
-def get_first_name(req):
-    name = req.user.first_name
-    return JsonResponse({"name": name})
+def get_user_info(req):
+    user = req.user
+    profile = user.profile
+    return JsonResponse({"name": user.first_name, "sex": profile.get_sex_display(),
+                          "age": profile.age, "goal": profile.get_goal_display(),
+                            "experience": profile.get_experience_display()})
 
 @login_required
 def get_plan(request):

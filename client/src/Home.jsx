@@ -6,24 +6,34 @@ import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
 import PuffLoader from "react-spinners/PuffLoader";
-
+import ProceedModal from "./ProceedModal";
 
 function Home() {
-  const [userName, setUserName] = useState("User!");
+  const [userName, setUserName] = useState("User");
+  const [sex, setSex] = useState(null);
+  const [age, setAge] = useState(null);
+  const [goal, setGoal] = useState(null);
+  const [experience, setExperience] = useState(null);
   const [userPlan, setUserPlan] = useState(null);
   const [editable, setEditable] = useState(false);
   const [numWeeks, setNumWeeks] = useState(0);
   const [currentWeek, setCurrentWeek] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [proceedPopUp, setProceedPopUp] = useState(false);
   const navigate = useNavigate();
 
-  async function getUserName() {
-    const res = await fetch("/api/get_name", {
+  async function getUserInfo() {
+    const res = await fetch("/api/get_user_info", {
       credentials: "same-origin",
     });
     const body = await res.json();
+    console.log(body)
     setUserName(body.name);
+    setSex(body.sex);
+    setAge(body.age);
+    setGoal(body.goal);
+    setExperience(body.experience);
   }
 
   async function getPlan() {
@@ -54,10 +64,16 @@ function Home() {
         deletePlan();
         navigate("/plan_info");
       }
-    } else{
+    } else {
       navigate("/plan_info");
     }
-   
+  };
+
+  const handleGeneratePlan = () => {
+    if (age === null || sex === null || goal === null || experience === null) {
+    } else {
+      setProceedPopUp(true);
+    }
   };
 
   async function generatePlan() {
@@ -126,12 +142,12 @@ function Home() {
       deletePlan();
       setUserPlan(null);
     } else {
-      return
+      return;
     }
   };
 
   useEffect(() => {
-    getUserName();
+    getUserInfo();
     getPlan();
   }, []);
 
@@ -144,9 +160,7 @@ function Home() {
       <div className="w-3/4">
         {loading ? (
           <div className="flex items-center justify-center">
-            <PuffLoader
-            color="#F26419"
-            />
+            <PuffLoader color="#F26419" />
           </div>
         ) : (
           <>
@@ -184,7 +198,7 @@ function Home() {
                 </button>
                 <button
                   className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                  onClick={generatePlan}
+                  onClick={handleGeneratePlan}
                 >
                   Generate a plan using AI
                 </button>
@@ -220,6 +234,22 @@ function Home() {
               ></Plan>
             )}
           </>
+        )}
+      </div>
+      <div>
+        {proceedPopUp && (
+          <ProceedModal
+            sex={sex}
+            age={age}
+            goal={goal}
+            experience={experience}
+            hidden={!proceedPopUp}
+            onHide={() => setProceedPopUp(false)}
+            onContinue={() => {
+              generatePlan();
+              setProceedPopUp(false);
+            }}
+          />
         )}
       </div>
     </div>
