@@ -52,9 +52,12 @@ function Home() {
       );
       if (confirm) {
         deletePlan();
+        navigate("/plan_info");
       }
+    } else{
+      navigate("/plan_info");
     }
-    navigate("/plan_info");
+   
   };
 
   async function generatePlan() {
@@ -122,6 +125,8 @@ function Home() {
     if (confirm) {
       deletePlan();
       setUserPlan(null);
+    } else {
+      return
     }
   };
 
@@ -186,7 +191,7 @@ function Home() {
                 {userPlan && (
                   <button
                     className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
-                    onClick={deletePlan}
+                    onClick={handleDeleteButton}
                   >
                     Delete Plan
                   </button>
