@@ -8,6 +8,7 @@ import ErrorMessage from "./ErrorMessage";
 import PuffLoader from "react-spinners/PuffLoader";
 import ProceedModal from "./ProceedModal";
 import ProfileModal from "./ProfileModal";
+import PlanInfoModal from "./PlanInfoModal";
 
 function Home() {
   const [userName, setUserName] = useState("User");
@@ -23,6 +24,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [proceedPopUp, setProceedPopUp] = useState(false);
   const [profilePopUp, setProfilePopUp] = useState(false);
+  const [planInfoPopUp, setPlanInfoPopUp] = useState(false);
   const navigate = useNavigate();
 
   async function getUserInfo() {
@@ -256,8 +258,8 @@ function Home() {
             hidden={!proceedPopUp}
             onHide={() => setProceedPopUp(false)}
             onContinue={() => {
-              generatePlan();
               setProceedPopUp(false);
+              setPlanInfoPopUp(true)
             }}
           />
         )}
@@ -265,6 +267,16 @@ function Home() {
           <ProfileModal
             hidden={!profilePopUp}
             onHide={() => setProfilePopUp(false)}
+          />
+        )}
+        {planInfoPopUp && (
+          <PlanInfoModal
+            hidden={!planInfoPopUp}
+            onHide={() => setPlanInfoPopUp(false)}
+            onContinue={() => {
+              setPlanInfoPopUp(false);
+              generatePlan();
+            }}
           />
         )}
       </div>
