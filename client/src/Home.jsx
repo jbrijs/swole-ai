@@ -7,6 +7,7 @@ import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
 import PuffLoader from "react-spinners/PuffLoader";
 import ProceedModal from "./ProceedModal";
+import ProfileModal from "./ProfileModal";
 
 function Home() {
   const [userName, setUserName] = useState("User");
@@ -21,6 +22,7 @@ function Home() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [proceedPopUp, setProceedPopUp] = useState(false);
+  const [profilePopUp, setProfilePopUp] = useState(false);
   const navigate = useNavigate();
 
   async function getUserInfo() {
@@ -28,7 +30,7 @@ function Home() {
       credentials: "same-origin",
     });
     const body = await res.json();
-    console.log(body)
+    console.log(body);
     setUserName(body.name);
     setSex(body.sex);
     setAge(body.age);
@@ -71,6 +73,7 @@ function Home() {
 
   const handleGeneratePlan = () => {
     if (age === null || sex === null || goal === null || experience === null) {
+      setProfilePopUp(true)
     } else {
       setProceedPopUp(true);
     }
@@ -87,7 +90,6 @@ function Home() {
     });
     const body = await res.json();
     setLoading(false);
-    console.log(body);
     setUserPlan(body.plan);
     setNumWeeks(body.plan.weeks.length);
   }
@@ -249,6 +251,12 @@ function Home() {
               generatePlan();
               setProceedPopUp(false);
             }}
+          />
+        )}
+        {profilePopUp && (
+          <ProfileModal
+            hidden={!profilePopUp}
+            onHide={() => setProfilePopUp(false)}
           />
         )}
       </div>
