@@ -73,25 +73,33 @@ function Home() {
 
   const handleGeneratePlan = () => {
     if (age === null || sex === null || goal === null || experience === null) {
-      setProfilePopUp(true)
+      setProfilePopUp(true);
     } else {
       setProceedPopUp(true);
     }
   };
 
   async function generatePlan() {
-    setLoading(true);
-    const res = await fetch("/api/generate_plan", {
-      method: "GET",
-      credentials: "same-origin",
-      headers: {
-        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
-      },
-    });
-    const body = await res.json();
-    setLoading(false);
-    setUserPlan(body.plan);
-    setNumWeeks(body.plan.weeks.length);
+    if (userPlan) {
+      const confirm = window.confirm(
+        "Are you sure? Doing so will delete your current plan."
+      );
+      if (confirm) {
+        deletePlan();
+        setLoading(true);
+        const res = await fetch("/api/generate_plan", {
+          method: "GET",
+          credentials: "same-origin",
+          headers: {
+            "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+          },
+        });
+        const body = await res.json();
+        setLoading(false);
+        setUserPlan(body.plan);
+        setNumWeeks(body.plan.weeks.length);
+      }
+    }
   }
 
   async function editPlan() {
