@@ -19,23 +19,37 @@ function PlanInfoModal({ hidden, onHide, onContinue }) {
         <h1 className="mb-4 text-xl font-bold">
           Please fill out these plan specifications:
         </h1>
-        <div>
-          <NumberForm
-            value={numWeeks}
-            label="Weeks"
-            name="weeks"
-            min={1}
-            max={12}
-            onChange={(e) => setNumWeeks(e.target.value)}
-          />
-          <NumberForm
-            value={daysPerWeek}
-            label="Days Per Week"
-            name="days per week"
-            min={1}
-            max={7}
-            onChange={(e) => setDaysPerWeek(e.target.value)}
-          />
+        <div className="flex flex-col gap-6 justify-center items-center my-6">
+          <div className="flex flex-row gap-4">
+            <label className="font-semibold text-lg" htmlFor="weeks">
+              Weeks:{" "}
+            </label>
+            <input
+              className="border shadow-sm px-2 bg-slate-50 rounded-lg text-lg font-light"
+              type="number"
+              value={numWeeks}
+              name="weeks"
+              id="weeks"
+              onChange={(e) => setNumWeeks(e.target.value)}
+              min={1}
+              max={12}
+            />
+          </div>
+          <div className="flex flex-row gap-4">
+            <label className="font-semibold text-lg" htmlFor="days">
+              Days Per Week:{" "}
+            </label>
+            <input
+              className="border shadow-sm px-2 bg-slate-50 rounded-lg text-lg font-light"
+              type="number"
+              value={daysPerWeek}
+              name="days"
+              id="days"
+              min={1}
+              max={7}
+              onChange={(e) => setDaysPerWeek(e.target.value)}
+            />
+          </div>
         </div>
         <div className="flex space-x-4">
           <button
