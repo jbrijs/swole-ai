@@ -44,6 +44,51 @@ const addExercise = (weekIndex, dayIndex) => {
   });
 };
 
+const addDay = (weekIndex) => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const newWeeks = [...newPlan.weeks];
+    const newWeek = { ...newWeeks[weekIndex] };
+
+    const defaultExercise = {
+      name: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    };
+
+    const newDay = {
+      name: `Day ${newWeek.days.length + 1}`,
+      exercises: [defaultExercise],
+    };
+    newWeek.days = [...newWeek.days, newDay];
+    newWeeks[weekIndex] = newWeek;
+    newPlan.weeks = newWeeks;
+  });
+};
+
+const addWeek = () => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const defaultExercise = {
+      name: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    };
+    const defaultDay = {
+      name: "Day 1",
+      exercises: [defaultExercise],
+    };
+    const newWeek = {
+      days: [defaultDay],
+    };
+
+    newPlan.weeks = [...newPlan.weeks, newWeek];
+    return newPlan;
+  });
+};
+
 const removeExercise = (weekIndex, dayIndex, exerciseIndex) => {
   setPlan((prevPlan) => {
     const newPlan = { ...prevPlan };
@@ -57,6 +102,29 @@ const removeExercise = (weekIndex, dayIndex, exerciseIndex) => {
     newDays[dayIndex] = newDay;
     newWeek.days = newDays;
     newWeeks[weekIndex] = newWeek;
+    newPlan.weeks = newWeeks;
+    return newPlan;
+  });
+};
+
+const removeDay = (weekIndex, dayIndex) => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const newWeeks = [...newPlan.weeks];
+    const newWeek = { ...newWeeks[weekIndex] };
+    newWeek.days = newWeek.days.filter((_, index) => index !== dayIndex);
+    newWeeks[weekIndex] = newWeek;
+    newPlan.weeks = newWeeks;
+    return newPlan;
+  });
+};
+
+const removeWeek = () => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const newWeeks = prevPlan.weeks.filter(
+      (_, index) => index !== prevPlan.weeks.length() - 1
+    );
     newPlan.weeks = newWeeks;
     return newPlan;
   });
