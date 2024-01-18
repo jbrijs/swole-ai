@@ -22,6 +22,46 @@ const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   };
 };
 
+const addExercise = (weekIndex, dayIndex) => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const newWeeks = [...newPlan.weeks];
+    const newWeek = { ...newWeeks[weekIndex] };
+    const newDays = [...newWeek.days];
+    const newDay = { ...newDays[dayIndex] };
+    const newExercise = {
+      name: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    };
+    newDay.exercises = [...newDay.exercises, newExercise];
+    newDays[dayIndex] = newDay;
+    newWeeks.days = newDays;
+    newWeeks[weekIndex] = newWeek;
+    newPlan.weeks = newWeeks;
+    return newPlan;
+  });
+};
+
+const removeExercise = (weekIndex, dayIndex, exerciseIndex) => {
+  setPlan((prevPlan) => {
+    const newPlan = { ...prevPlan };
+    const newWeeks = [...newPlan.weeks];
+    const newWeek = { ...newWeeks[weekIndex] };
+    const newDays = [...newWeek.days];
+    const newDay = { ...newDays[dayIndex] };
+    newDay.exercises = newDay.exercises.filter(
+      (_, index) => index !== exerciseIndex
+    );
+    newDays[dayIndex] = newDay;
+    newWeek.days = newDays;
+    newWeeks[weekIndex] = newWeek;
+    newPlan.weeks = newWeeks;
+    return newPlan;
+  });
+};
+
 function NewPlan() {
   const location = useLocation();
   const { numWeeks, daysPerWeek, exercisesPerDay } = location.state;
@@ -137,24 +177,3 @@ function NewPlan() {
   );
 }
 export default NewPlan;
-
-{
-  /* {currentWeek > 0 && (
-          <button
-            onClick={() => setCurrentWeek(currentWeek - 1)}
-            className="flex flex-row items-center justify-center absolute left-80 bottom-3/4 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-          >
-            <KeyboardArrowLeftIcon />
-            Week {currentWeek}
-          </button>
-        )}
-        {currentWeek < numWeeks - 1 && (
-          <button
-            onClick={() => setCurrentWeek(currentWeek + 1)}
-            className="flex flex-row items-center justify-center absolute right-80 bottom-3/4 bg-primary px-3 h-12 rounded-lg text-xl text-black hover:text-white hover:bg-secondary transition"
-          >
-            Week {currentWeek + 2}
-            <KeyboardArrowRightIcon />
-          </button>
-        )} */
-}
