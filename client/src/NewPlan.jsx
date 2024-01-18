@@ -4,6 +4,7 @@ import ExerciseInput from "./ExerciseInput";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
+import AddRemoveButtons from "./AddRemoveButtons";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -223,33 +224,50 @@ function NewPlan() {
                 </p>
               </div>
               {day.exercises.map((exercise, exerciseIndex) => (
-                <ExerciseInput
-                  key={exerciseIndex}
-                  exercise={exercise}
-                  onChange={(e) =>
-                    handleExerciseChange(
-                      currentWeek,
-                      dayIndex,
-                      exerciseIndex,
-                      e
-                    )
-                  }
-                  editable={true}
-                />
+                <React.Fragment key={exerciseIndex}>
+                  <ExerciseInput
+                    key={exerciseIndex}
+                    exercise={exercise}
+                    onChange={(e) =>
+                      handleExerciseChange(
+                        currentWeek,
+                        dayIndex,
+                        exerciseIndex,
+                        e
+                      )
+                    }
+                    editable={true}
+                  />
+                  {exerciseIndex === day.exercises.length - 1 && (
+                    <div className="w-full flex justify-end mt-4">
+                      <AddRemoveButtons
+                        type="Exercise"
+                        addCondition={exerciseIndex < 20}
+                        removeCondition={exerciseIndex > 0}
+                      />
+                    </div>
+                  )}
+                </React.Fragment>
               ))}
-              
-              <button>Add Exercise</button>
             </div>
           ))}
-          {daysPerWeek <= 6 && <button>Add Day</button>}
-          {daysPerWeek > 1 && <button>Remove Day</button>}
-        </form>
-        {currentWeek === numWeeks - 1 && (
-          <div>
-            <button>Add Week</button>
-            <button>Remove Week</button>
+          <div className="w-full flex justify-end">
+            <AddRemoveButtons
+              type="Day"
+              addCondition={plan.weeks[currentWeek].days.length <= 6}
+              removeCondition={plan.weeks[currentWeek].days.length > 0}
+            />
           </div>
-        )}
+        </form>
+        <div className="w-3/4 flex justify-end">
+          {currentWeek === numWeeks - 1 && (
+            <AddRemoveButtons
+              type="Week"
+              addCondition={numWeeks <= 11}
+              removeCondition={numWeeks > 1}
+            />
+          )}
+        </div>
       </div>
     </>
   );
