@@ -237,9 +237,19 @@ function NewPlan() {
                   editable={true}
                 />
               ))}
+              
+              <button>Add Exercise</button>
             </div>
           ))}
+          {daysPerWeek <= 6 && <button>Add Day</button>}
+          {daysPerWeek > 1 && <button>Remove Day</button>}
         </form>
+        {currentWeek === numWeeks - 1 && (
+          <div>
+            <button>Add Week</button>
+            <button>Remove Week</button>
+          </div>
+        )}
       </div>
     </>
   );
