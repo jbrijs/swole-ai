@@ -5,6 +5,7 @@ import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
 import AddRemoveButtons from "./AddRemoveButtons";
+import AddButton from "./AddButton";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -21,114 +22,6 @@ const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
       })),
     })),
   };
-};
-
-const addExercise = (weekIndex, dayIndex) => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const newWeeks = [...newPlan.weeks];
-    const newWeek = { ...newWeeks[weekIndex] };
-    const newDays = [...newWeek.days];
-    const newDay = { ...newDays[dayIndex] };
-    const newExercise = {
-      name: "",
-      sets: 0,
-      reps: 0,
-      weight: 0,
-    };
-    newDay.exercises = [...newDay.exercises, newExercise];
-    newDays[dayIndex] = newDay;
-    newWeeks.days = newDays;
-    newWeeks[weekIndex] = newWeek;
-    newPlan.weeks = newWeeks;
-    return newPlan;
-  });
-};
-
-const addDay = (weekIndex) => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const newWeeks = [...newPlan.weeks];
-    const newWeek = { ...newWeeks[weekIndex] };
-
-    const defaultExercise = {
-      name: "",
-      sets: 0,
-      reps: 0,
-      weight: 0,
-    };
-
-    const newDay = {
-      name: `Day ${newWeek.days.length + 1}`,
-      exercises: [defaultExercise],
-    };
-    newWeek.days = [...newWeek.days, newDay];
-    newWeeks[weekIndex] = newWeek;
-    newPlan.weeks = newWeeks;
-  });
-};
-
-const addWeek = () => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const defaultExercise = {
-      name: "",
-      sets: 0,
-      reps: 0,
-      weight: 0,
-    };
-    const defaultDay = {
-      name: "Day 1",
-      exercises: [defaultExercise],
-    };
-    const newWeek = {
-      days: [defaultDay],
-    };
-
-    newPlan.weeks = [...newPlan.weeks, newWeek];
-    return newPlan;
-  });
-};
-
-const removeExercise = (weekIndex, dayIndex, exerciseIndex) => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const newWeeks = [...newPlan.weeks];
-    const newWeek = { ...newWeeks[weekIndex] };
-    const newDays = [...newWeek.days];
-    const newDay = { ...newDays[dayIndex] };
-    newDay.exercises = newDay.exercises.filter(
-      (_, index) => index !== exerciseIndex
-    );
-    newDays[dayIndex] = newDay;
-    newWeek.days = newDays;
-    newWeeks[weekIndex] = newWeek;
-    newPlan.weeks = newWeeks;
-    return newPlan;
-  });
-};
-
-const removeDay = (weekIndex, dayIndex) => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const newWeeks = [...newPlan.weeks];
-    const newWeek = { ...newWeeks[weekIndex] };
-    newWeek.days = newWeek.days.filter((_, index) => index !== dayIndex);
-    newWeeks[weekIndex] = newWeek;
-    newPlan.weeks = newWeeks;
-    return newPlan;
-  });
-};
-
-const removeWeek = () => {
-  setPlan((prevPlan) => {
-    const newPlan = { ...prevPlan };
-    const newWeeks = prevPlan.weeks.filter(
-      (_, index) => index !== prevPlan.weeks.length() - 1
-    );
-    newPlan.weeks = newWeeks;
-    return newPlan;
-  });
 };
 
 function NewPlan() {
@@ -161,6 +54,114 @@ function NewPlan() {
     }
   }
 
+  const addExercise = (weekIndex, dayIndex) => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const newWeeks = [...newPlan.weeks];
+      const newWeek = { ...newWeeks[weekIndex] };
+      const newDays = [...newWeek.days];
+      const newDay = { ...newDays[dayIndex] };
+      const newExercise = {
+        name: "",
+        sets: 0,
+        reps: 0,
+        weight: 0,
+      };
+      newDay.exercises = [...newDay.exercises, newExercise];
+      newDays[dayIndex] = newDay;
+      newWeeks.days = newDays;
+      newWeeks[weekIndex] = newWeek;
+      newPlan.weeks = newWeeks;
+      return newPlan;
+    });
+  };
+
+  const addDay = (weekIndex) => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const newWeeks = [...newPlan.weeks];
+      const newWeek = { ...newWeeks[weekIndex] };
+
+      const defaultExercise = {
+        name: "",
+        sets: 0,
+        reps: 0,
+        weight: 0,
+      };
+
+      const newDay = {
+        name: `Day ${newWeek.days.length + 1}`,
+        exercises: [defaultExercise],
+      };
+      newWeek.days = [...newWeek.days, newDay];
+      newWeeks[weekIndex] = newWeek;
+      newPlan.weeks = newWeeks;
+    });
+  };
+
+  const addWeek = () => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const defaultExercise = {
+        name: "",
+        sets: 0,
+        reps: 0,
+        weight: 0,
+      };
+      const defaultDay = {
+        name: "Day 1",
+        exercises: [defaultExercise],
+      };
+      const newWeek = {
+        days: [defaultDay],
+      };
+
+      newPlan.weeks = [...newPlan.weeks, newWeek];
+      return newPlan;
+    });
+  };
+
+  const removeExercise = (weekIndex, dayIndex, exerciseIndex) => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const newWeeks = [...newPlan.weeks];
+      const newWeek = { ...newWeeks[weekIndex] };
+      const newDays = [...newWeek.days];
+      const newDay = { ...newDays[dayIndex] };
+      newDay.exercises = newDay.exercises.filter(
+        (_, index) => index !== exerciseIndex
+      );
+      newDays[dayIndex] = newDay;
+      newWeek.days = newDays;
+      newWeeks[weekIndex] = newWeek;
+      newPlan.weeks = newWeeks;
+      return newPlan;
+    });
+  };
+
+  const removeDay = (weekIndex, dayIndex) => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const newWeeks = [...newPlan.weeks];
+      const newWeek = { ...newWeeks[weekIndex] };
+      newWeek.days = newWeek.days.filter((_, index) => index !== dayIndex);
+      newWeeks[weekIndex] = newWeek;
+      newPlan.weeks = newWeeks;
+      return newPlan;
+    });
+  };
+
+  const removeWeek = () => {
+    setPlan((prevPlan) => {
+      const newPlan = { ...prevPlan };
+      const newWeeks = prevPlan.weeks.filter(
+        (_, index) => index !== prevPlan.weeks.length() - 1
+      );
+      newPlan.weeks = newWeeks;
+      return newPlan;
+    });
+  };
+
   const handleExerciseChange = (weekIndex, dayIndex, exerciseIndex, event) => {
     const { name, value } = event.target;
 
@@ -184,6 +185,10 @@ function NewPlan() {
 
       return updatedPlan;
     });
+  };
+
+  const handleAddDay = (weekIndex) => {
+    addDay(weekIndex);
   };
 
   return (
@@ -238,35 +243,14 @@ function NewPlan() {
                     }
                     editable={true}
                   />
-                  {exerciseIndex === day.exercises.length - 1 && (
-                    <div className="w-full flex justify-end mt-4">
-                      <AddRemoveButtons
-                        type="Exercise"
-                        addCondition={exerciseIndex < 20}
-                        removeCondition={exerciseIndex > 0}
-                      />
-                    </div>
-                  )}
                 </React.Fragment>
               ))}
+              <div className="w-full flex justify-end"></div>
             </div>
           ))}
-          <div className="w-full flex justify-end">
-            <AddRemoveButtons
-              type="Day"
-              addCondition={plan.weeks[currentWeek].days.length <= 6}
-              removeCondition={plan.weeks[currentWeek].days.length > 0}
-            />
-          </div>
         </form>
         <div className="w-3/4 flex justify-end">
-          {currentWeek === numWeeks - 1 && (
-            <AddRemoveButtons
-              type="Week"
-              addCondition={numWeeks <= 11}
-              removeCondition={numWeeks > 1}
-            />
-          )}
+          <AddButton/>
         </div>
       </div>
     </>
