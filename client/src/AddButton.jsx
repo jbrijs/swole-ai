@@ -7,7 +7,7 @@ function AddButton({ onClick }) {
       className="w-12 h-12 bg-secondary rounded-3xl text-white hover:bg-tertiary"
       onClick={() => onClick}
     >
-      <AddIcon className="" />
+      <AddIcon/>
     </button>
   );
 }

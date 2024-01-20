@@ -33,6 +33,7 @@ function NewPlan() {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   async function createPlan(e) {
     e.preventDefault();
@@ -250,7 +251,7 @@ function NewPlan() {
           ))}
         </form>
         <div className="w-3/4 flex justify-end">
-          <AddButton/>
+          <AddButton />
         </div>
       </div>
     </>
