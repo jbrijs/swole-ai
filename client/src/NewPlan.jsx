@@ -6,6 +6,7 @@ import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
 import AddRemoveButtons from "./AddRemoveButtons";
 import AddButton from "./AddButton";
+import AddModal from "./AddModal";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -192,6 +193,11 @@ function NewPlan() {
     addDay(weekIndex);
   };
 
+  const handleAddButtonClick = () => {
+    setShowAddModal(true);
+    console.log(showAddModal);
+  };
+
   return (
     <>
       <div className="flex flex-col h-full items-center justify-center w-full">
@@ -250,8 +256,9 @@ function NewPlan() {
             </div>
           ))}
         </form>
-        <div className="w-3/4 flex justify-end">
-          <AddButton />
+        <div className="w-3/4 flex justify-end gap-4 items-center h-12">
+          <AddModal visibility={showAddModal} />
+          <AddButton onClick={handleAddButtonClick} />
         </div>
       </div>
     </>
