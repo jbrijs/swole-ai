@@ -256,7 +256,7 @@ function NewPlan() {
             </div>
           ))}
         </form>
-        <div className="w-3/4 flex justify-end gap-4 items-center h-12">
+        <div className="w-3/4 flex justify-end gap-4 items-center h-12 mt-6">
           <AddModal visibility={showAddModal} />
           <AddButton onClick={handleAddButtonClick} />
         </div>

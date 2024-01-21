@@ -1,8 +1,8 @@
 import React from 'react'
 
-function AddModalOption({option, onClick, visibility}) {
+function AddModalOption({option, onClick, visibility, style}) {
   return (
-    <button className='w-11/12 py-1 bg-slate-50 '
+    <button className= {`w-full bg-slate-50 ${style}`}
     hidden={!visibility}
     onClick={()=> onClick}>
        Add {option}
