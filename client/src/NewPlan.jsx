@@ -27,9 +27,9 @@ const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
 
 function NewPlan() {
   const location = useLocation();
-  const { numWeeks, daysPerWeek, exercisesPerDay } = location.state;
+  const [numWeeks, setNumWeeks] = useState(1)
   const [plan, setPlan] = useState(
-    initializePlan(numWeeks, daysPerWeek, exercisesPerDay)
+    initializePlan(1, 1, 1)
   );
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
@@ -125,6 +125,7 @@ function NewPlan() {
 
       newPlan.weeks = [...newPlan.weeks, newWeek];
       console.log(newPlan);
+      setNumWeeks(numWeeks + 1)
       return newPlan;
     });
   };
