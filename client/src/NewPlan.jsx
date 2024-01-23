@@ -27,10 +27,8 @@ const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
 
 function NewPlan() {
   const location = useLocation();
-  const [numWeeks, setNumWeeks] = useState(1)
-  const [plan, setPlan] = useState(
-    initializePlan(1, 1, 1)
-  );
+  const [numWeeks, setNumWeeks] = useState(1);
+  const [plan, setPlan] = useState(initializePlan(1, 1, 1));
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -60,19 +58,21 @@ function NewPlan() {
     setPlan((prevPlan) => {
       const newPlan = { ...prevPlan };
       const newWeeks = [...newPlan.weeks];
-      const newWeek = { ...newWeeks[weekIndex] };
-      const newDays = [...newWeek.days];
-      const newDay = { ...newDays[dayIndex] };
+      const updatedWeek = { ...newWeeks[weekIndex] };
+      const updatedDays = [...updatedWeek.days];
+      const updatedDay = { ...updatedDays[dayIndex] };
+
       const newExercise = {
         name: "",
         sets: 0,
         reps: 0,
         weight: 0,
       };
-      newDay.exercises = [...newDay.exercises, newExercise];
-      newDays[dayIndex] = newDay;
-      newWeeks.days = newDays;
-      newWeeks[weekIndex] = newWeek;
+
+      updatedDay.exercises = [...updatedDay.exercises, newExercise];
+      updatedDays[dayIndex] = updatedDay;
+      updatedWeek.days = updatedDays;
+      newWeeks[weekIndex] = updatedWeek;
       newPlan.weeks = newWeeks;
       return newPlan;
     });
@@ -125,7 +125,7 @@ function NewPlan() {
 
       newPlan.weeks = [...newPlan.weeks, newWeek];
       console.log(newPlan);
-      setNumWeeks(numWeeks + 1)
+      setNumWeeks(numWeeks + 1);
       return newPlan;
     });
   };
@@ -194,6 +194,10 @@ function NewPlan() {
 
       return updatedPlan;
     });
+  };
+
+  const handleAddExercise = (weekIndex, dayIndex) => {
+    addExercise(weekIndex, dayIndex);
   };
 
   const handleAddDay = (weekIndex) => {
@@ -265,6 +269,15 @@ function NewPlan() {
                 </React.Fragment>
               ))}
               <div className="w-full flex justify-end"></div>
+              <div className="w-full flex justify-end items-center">
+                <button
+                  type="button"
+                  className="bg-primary h-10 mt-4 px-2 bg-secondary rounded-lg text-white flex items-center"
+                  onClick={() => handleAddExercise(currentWeek, dayIndex)}
+                >
+                  Add Exercise
+                </button>
+              </div>
             </div>
           ))}
         </form>
