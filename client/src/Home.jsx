@@ -82,13 +82,21 @@ function Home() {
   };
 
   async function generatePlan() {
+    let shouldGenerate = true;
+  
     if (userPlan) {
       const confirm = window.confirm(
         "Are you sure? Doing so will delete your current plan."
       );
+      shouldGenerate = confirm;
       if (confirm) {
-        deletePlan();
-        setLoading(true);
+        await deletePlan(); // Await the completion of deletePlan
+      }
+    }
+  
+    if (shouldGenerate) {
+      setLoading(true);
+      try {
         const res = await fetch("/api/generate_plan", {
           method: "GET",
           credentials: "same-origin",
@@ -96,13 +104,23 @@ function Home() {
             "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
           },
         });
-        const body = await res.json();
+        if (res.ok) {
+          const body = await res.json();
+          setUserPlan(body.plan);
+          setNumWeeks(body.plan.weeks.length);
+        } else {
+          // Handle non-200 responses
+          console.error("Failed to generate plan:", res.status);
+        }
+      } catch (error) {
+        console.error("Error generating plan:", error);
+        // Handle fetch errors (e.g., network issues)
+      } finally {
         setLoading(false);
-        setUserPlan(body.plan);
-        setNumWeeks(body.plan.weeks.length);
       }
     }
   }
+  
 
   async function editPlan() {
     const res = await fetch("/api/edit_plan", {
@@ -259,7 +277,7 @@ function Home() {
             onHide={() => setProceedPopUp(false)}
             onContinue={() => {
               setProceedPopUp(false);
-              setPlanInfoPopUp(true)
+              setPlanInfoPopUp(true);
             }}
           />
         )}
@@ -274,8 +292,9 @@ function Home() {
             hidden={!planInfoPopUp}
             onHide={() => setPlanInfoPopUp(false)}
             onContinue={() => {
-              setPlanInfoPopUp(false);
               generatePlan();
+              console.log("I was called to generate a plan");
+              setPlanInfoPopUp(false);
             }}
           />
         )}

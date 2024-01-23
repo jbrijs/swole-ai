@@ -1,4 +1,6 @@
 import React from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function ExerciseInput({ exercise, onChange, editable }) {
   let className = "";
@@ -6,8 +8,13 @@ function ExerciseInput({ exercise, onChange, editable }) {
     ? (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 py-1")
     : (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 py-1");
 
+  let deleteClassName ="";
+  editable
+    ? (deleteClassName =  "bg-slate-200 border-r border-l border-b border-gray-400")
+    : (deleteClassName =  "bg-slate-100 border-r border-l border-b border-gray-400")
+
   return (
-    <div>
+    <div className="w-full flex">
       <input
         type="text"
         name="name"
@@ -47,6 +54,7 @@ function ExerciseInput({ exercise, onChange, editable }) {
         readOnly={!editable}
         min={0}
       />
+      <button className={deleteClassName}><DeleteIcon/></button>
     </div>
   );
 }

@@ -60,9 +60,9 @@ function PlanInfoModal({ hidden, onHide, onContinue }) {
           </button>
           <button
             className="px-4 py-2 bg-secondary text-white rounded"
-            onClick={() => onContinue()}
+            onClick={onContinue}
           >
-            Continue to Profile
+            Continue
           </button>
         </div>
       </div>
