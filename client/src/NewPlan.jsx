@@ -101,6 +101,7 @@ function NewPlan() {
       newWeek.days = [...newWeek.days, newDay];
       newWeeks[weekIndex] = newWeek;
       newPlan.weeks = newWeeks;
+
       return newPlan;
     });
   };
@@ -123,6 +124,7 @@ function NewPlan() {
       };
 
       newPlan.weeks = [...newPlan.weeks, newWeek];
+      console.log(newPlan);
       return newPlan;
     });
   };
@@ -195,6 +197,12 @@ function NewPlan() {
 
   const handleAddDay = (weekIndex) => {
     addDay(weekIndex);
+    setShowAddModal(false);
+  };
+
+  const handleAddWeek = () => {
+    addWeek();
+    setShowAddModal(false);
   };
 
   const handleAddButtonClick = () => {
@@ -263,6 +271,7 @@ function NewPlan() {
           <AddModal
             visibility={showAddModal}
             addDay={() => handleAddDay(currentWeek)}
+            addWeek={() => handleAddWeek()}
           />
           <AddButton onClick={handleAddButtonClick} />
         </div>
