@@ -4,9 +4,9 @@ import ExerciseInput from "./ExerciseInput";
 import cookie from "cookie";
 import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
-import AddRemoveButtons from "./AddRemoveButtons";
 import AddButton from "./AddButton";
 import AddModal from "./AddModal";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -237,19 +237,20 @@ function NewPlan() {
               <h1 className="text-2xl text-text pb-2 pt-6" key={dayIndex}>
                 Day {dayIndex + 1}
               </h1>
-              <div className="flex flex-row items-center">
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
+              <div className="flex flex-row items-center h-12">
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center">
                   Exercise
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-l-2 border-r-2 border-background">
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-l-2 border-r-2 border-background">
                   Sets
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3 border-r-2 border-background">
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
                   Reps
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary py-3">
+                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
                   Weight
                 </p>
+                <button type="button" className="bg-secondary h-full text-white"><DeleteIcon/></button>
               </div>
               {day.exercises.map((exercise, exerciseIndex) => (
                 <React.Fragment key={exerciseIndex}>
@@ -281,7 +282,7 @@ function NewPlan() {
             </div>
           ))}
         </form>
-        <div className="w-3/4 flex justify-end gap-4 items-center mb-16 h-12 mt-6">
+        <div className="w-3/4 flex justify-end gap-4 items-center mb-16 h-12">
           <AddModal
             visibility={showAddModal}
             addDay={() => handleAddDay(currentWeek)}
