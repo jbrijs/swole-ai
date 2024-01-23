@@ -82,7 +82,10 @@ function NewPlan() {
     setPlan((prevPlan) => {
       const newPlan = { ...prevPlan };
       const newWeeks = [...newPlan.weeks];
-      const newWeek = { ...newWeeks[weekIndex] };
+      const newWeek = {
+        ...newWeeks[weekIndex],
+        days: newWeeks[weekIndex] ? newWeeks[weekIndex].days || [] : [],
+      };
 
       const defaultExercise = {
         name: "",
@@ -98,6 +101,7 @@ function NewPlan() {
       newWeek.days = [...newWeek.days, newDay];
       newWeeks[weekIndex] = newWeek;
       newPlan.weeks = newWeeks;
+      return newPlan;
     });
   };
 
@@ -195,7 +199,6 @@ function NewPlan() {
 
   const handleAddButtonClick = () => {
     setShowAddModal(true);
-    console.log(showAddModal);
   };
 
   return (
@@ -257,7 +260,10 @@ function NewPlan() {
           ))}
         </form>
         <div className="w-3/4 flex justify-end gap-4 items-center h-12 mt-6">
-          <AddModal visibility={showAddModal} />
+          <AddModal
+            visibility={showAddModal}
+            addDay={() => handleAddDay(currentWeek)}
+          />
           <AddButton onClick={handleAddButtonClick} />
         </div>
       </div>
