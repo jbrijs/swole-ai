@@ -281,7 +281,7 @@ function NewPlan() {
             </div>
           ))}
         </form>
-        <div className="w-3/4 flex justify-end gap-4 items-center h-12 mt-6">
+        <div className="w-3/4 flex justify-end gap-4 items-center mb-16 h-12 mt-6">
           <AddModal
             visibility={showAddModal}
             addDay={() => handleAddDay(currentWeek)}
