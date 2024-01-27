@@ -53,6 +53,3 @@ Assistant-ID, I am able to easily communicate with my assistant.
 
 - **Enhanced AI Features**: There are plans to expand the AI capabilities of the application, leveraging more features from the OpenAI API to provide additional intelligent functionalities that enhance user experience.
 
----
-
-This dedicated section on OpenAI API integration not only gives a clear understanding of its role within the application but also highlights the technological sophistication and advanced features of your project.
