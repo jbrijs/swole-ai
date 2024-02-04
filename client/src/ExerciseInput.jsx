@@ -1,17 +1,21 @@
 import React from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-function ExerciseInput({ exercise, onChange, editable }) {
+function ExerciseInput({ exercise, onChange, editable, onDelete }) {
   let className = "";
   editable
-    ? (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 py-1")
-    : (className = "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 py-1");
+    ? (className =
+        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 py-1")
+    : (className =
+        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 py-1");
 
-  let deleteClassName ="";
+  let deleteClassName = "";
   editable
-    ? (deleteClassName =  "bg-slate-200 border-r border-l border-b border-gray-400")
-    : (deleteClassName =  "bg-slate-100 border-r border-l border-b border-gray-400")
+    ? (deleteClassName =
+        "bg-slate-200 border-r border-l border-b border-gray-400")
+    : (deleteClassName =
+        "bg-slate-100 border-r border-l border-b border-gray-400");
 
   return (
     <div className="w-full flex">
@@ -54,7 +58,9 @@ function ExerciseInput({ exercise, onChange, editable }) {
         readOnly={!editable}
         min={0}
       />
-      <button className={deleteClassName}><DeleteIcon/></button>
+      <button type="button" className={deleteClassName} onClick={onDelete}>
+        <DeleteIcon />
+      </button>
     </div>
   );
 }

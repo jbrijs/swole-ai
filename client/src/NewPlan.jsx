@@ -6,7 +6,7 @@ import NavButtons from "./NavButtons";
 import ErrorMessage from "./ErrorMessage";
 import AddButton from "./AddButton";
 import AddModal from "./AddModal";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -160,11 +160,11 @@ function NewPlan() {
     });
   };
 
-  const removeWeek = () => {
+  const removeWeek = (weekIndex) => {
     setPlan((prevPlan) => {
       const newPlan = { ...prevPlan };
       const newWeeks = prevPlan.weeks.filter(
-        (_, index) => index !== prevPlan.weeks.length() - 1
+        (_, index) => index !== weekIndex
       );
       newPlan.weeks = newWeeks;
       return newPlan;
@@ -210,6 +210,32 @@ function NewPlan() {
     setShowAddModal(false);
   };
 
+  const handleRemoveExercise = (weekIndex, dayIndex, exerciseIndex) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this exercies?"
+    );
+    if (confirm) {
+      removeExercise(weekIndex, dayIndex, exerciseIndex);
+    }
+    return;
+  };
+  const handleRemoveDay = (weekIndex, dayIndex) => {
+    const confirm = window.confirm("Are you sure you want to delete this day?");
+    if (confirm) {
+      removeDay(weekIndex, dayIndex);
+    }
+    return;
+  };
+  const handleRemoveWeek = (weekIndex) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this week?"
+    );
+    if (confirm) {
+      removeWeek(weekIndex);
+    }
+    return;
+  };
+
   const handleAddButtonClick = () => {
     setShowAddModal(true);
   };
@@ -250,13 +276,19 @@ function NewPlan() {
                 <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
                   Weight
                 </p>
-                <button type="button" className="bg-secondary h-full text-white"><DeleteIcon/></button>
+                <button
+                  type="button"
+                  className="bg-secondary h-full text-white"
+                >
+                  <DeleteIcon />
+                </button>
               </div>
               {day.exercises.map((exercise, exerciseIndex) => (
                 <React.Fragment key={exerciseIndex}>
                   <ExerciseInput
                     key={exerciseIndex}
                     exercise={exercise}
+                    onDelete={() => removeExercise}
                     onChange={(e) =>
                       handleExerciseChange(
                         currentWeek,
