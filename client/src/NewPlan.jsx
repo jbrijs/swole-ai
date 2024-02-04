@@ -7,6 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 import AddButton from "./AddButton";
 import AddModal from "./AddModal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const initializePlan = (numWeeks, daysPerWeek, exercisesPerDay) => {
   return {
@@ -163,9 +164,7 @@ function NewPlan() {
   const removeWeek = (weekIndex) => {
     setPlan((prevPlan) => {
       const newPlan = { ...prevPlan };
-      const newWeeks = prevPlan.weeks.filter(
-        (_, index) => index !== weekIndex
-      );
+      const newWeeks = prevPlan.weeks.filter((_, index) => index !== weekIndex);
       newPlan.weeks = newWeeks;
       return newPlan;
     });
@@ -211,21 +210,30 @@ function NewPlan() {
   };
 
   const handleRemoveExercise = (weekIndex, dayIndex, exerciseIndex) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this exercies?"
-    );
-    if (confirm) {
-      removeExercise(weekIndex, dayIndex, exerciseIndex);
+    if (exerciseIndex > 0) {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this exercies?"
+      );
+      if (confirm) {
+        removeExercise(weekIndex, dayIndex, exerciseIndex);
+      }
+      return;
     }
     return;
   };
   const handleRemoveDay = (weekIndex, dayIndex) => {
-    const confirm = window.confirm("Are you sure you want to delete this day?");
-    if (confirm) {
-      removeDay(weekIndex, dayIndex);
+    if (dayIndex > 0) {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this day?"
+      );
+      if (confirm) {
+        removeDay(weekIndex, dayIndex);
+      }
+      return;
     }
     return;
   };
+
   const handleRemoveWeek = (weekIndex) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this week?"
@@ -279,6 +287,7 @@ function NewPlan() {
                 <button
                   type="button"
                   className="bg-secondary h-full text-white"
+                  onClick={() => handleRemoveDay(currentWeek, dayIndex)}
                 >
                   <DeleteIcon />
                 </button>
@@ -288,7 +297,9 @@ function NewPlan() {
                   <ExerciseInput
                     key={exerciseIndex}
                     exercise={exercise}
-                    onDelete={() => removeExercise}
+                    onDelete={() =>
+                      handleRemoveExercise(currentWeek, dayIndex, exerciseIndex)
+                    }
                     onChange={(e) =>
                       handleExerciseChange(
                         currentWeek,
@@ -320,6 +331,12 @@ function NewPlan() {
             addDay={() => handleAddDay(currentWeek)}
             addWeek={() => handleAddWeek()}
           />
+          {/* <button
+          type="button"
+          className="h-12 w-12 rounded-xl bg-secondary text-white"
+          onClick={() => handleRemoveWeek(currentWeek)}>
+            <DeleteOutlineIcon/>
+          </button> */}
           <AddButton onClick={handleAddButtonClick} />
         </div>
       </div>
