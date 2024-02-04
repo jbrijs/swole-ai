@@ -1,5 +1,5 @@
 # SwoleAI
-This project serves as a web app which allows users to create, store, and edit workout plans. It also allows users to provide personal information, i.e. goals, experience level, age, to enable AI to generate a workout plan for them.
+This project is a web app which allows users to create, store, and edit workout plans. It also allows users to provide personal information, i.e. goals, experience level, age, to enable AI to generate a workout plan for them.
 
 ## Strategy
 
