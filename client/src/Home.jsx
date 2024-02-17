@@ -204,14 +204,14 @@ function Home() {
                   <div>
                     {editable ? (
                       <button
-                        className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                        className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={editPlan}
                       >
                         Save Plan
                       </button>
                     ) : (
                       <button
-                        className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                        className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={() => setEditable(true)}
                       >
                         Edit plan
@@ -221,20 +221,20 @@ function Home() {
                 )}
 
                 <button
-                  className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                  className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                   onClick={handleCreateNewPlan}
                 >
                   Manually create a plan
                 </button>
                 <button
-                  className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                  className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                   onClick={handleGeneratePlan}
                 >
                   Generate a plan using AI
                 </button>
                 {userPlan && (
                   <button
-                    className="h-12 bg-secondary rounded-xl px-4 text-white hover:bg-tertiary transition ease-in duration-200"
+                    className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                     onClick={handleDeleteButton}
                   >
                     Delete Plan
