@@ -22,7 +22,7 @@ function ProfileModal({ hidden, onHide }) {
             Cancel
           </button>
           <button
-            className="px-4 py-2 bg-secondary text-white rounded"
+            className="px-4 py-2 bg-button shadow-md text-white rounded hover:bg-button_hover shadow-xl transition ease-in duration-150"
             onClick={() => navigate("/profile")}
           >
             Continue to Profile

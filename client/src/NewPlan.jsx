@@ -316,7 +316,7 @@ function NewPlan() {
               <div className="w-full flex justify-end items-center">
                 <button
                   type="button"
-                  className="bg-primary h-10 mt-4 px-2 bg-secondary rounded-lg text-white flex items-center"
+                  className="bg-primary h-10 mt-4 px-2 bg-button rounded-lg text-white flex items-center hover: bg-button_hover shadow-xl transition ease-in duration-150"
                   onClick={() => handleAddExercise(currentWeek, dayIndex)}
                 >
                   Add Exercise

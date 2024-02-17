@@ -11,7 +11,7 @@ function AddRemoveButtons({
     <>
       <div className="flex flex-row gap-4 mb-10 justify-center items-center">
         <button
-          className={`flex flex-row items-center justify-center bg-secondary px-3 h-10 rounded-3xl text-md text-white hover:bg-tertiary transition ease duration-300 ${
+          className={`flex flex-row items-center justify-center bg-button px-3 h-10 rounded-3xl text-md text-white hover:bg-button_hover transition ease-in duration-150 ${
             !removeCondition ? "opacity-70 cursor-not-allowed" : ""
           }`}
           disabled={!removeCondition}
@@ -21,7 +21,7 @@ function AddRemoveButtons({
           Remove {type}
         </button>
         <button
-          className={`flex flex-row items-center justify-center bg-secondary px-3 h-10 rounded-3xl text-md text-white hover:bg-tertiary transition ease duration-300 ${
+          className={`flex flex-row items-center justify-center bg-button px-3 h-10 rounded-3xl text-md text-white hover:bg-button_hover transition ease-in duration-150 ${
             !addCondition ? "opacity-70 cursor-not-allowed" : ""
           }`}
           disabled={!addCondition}

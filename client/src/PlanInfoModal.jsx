@@ -59,7 +59,7 @@ function PlanInfoModal({ hidden, onHide, onContinue }) {
             Cancel
           </button>
           <button
-            className="px-4 py-2 bg-secondary text-white rounded"
+            className="px-4 py-2 bg-button text-white rounded shadow-md hover: bg-button_hover transition ease-in duration-150 shadow-xl"
             onClick={onContinue}
           >
             Continue

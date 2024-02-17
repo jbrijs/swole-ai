@@ -45,7 +45,7 @@ function PlanInfo() {
         />
         <button
           type="submit"
-          className="my-4 h-12 bg-secondary rounded-xl px-8 mt-8 text-white hover:bg-tertiary transition ease-in duration-200"
+          className="my-4 h-12 bg-button rounded-xl px-8 mt-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
         >
           Submit
         </button>
