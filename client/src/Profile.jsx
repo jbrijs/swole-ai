@@ -118,7 +118,7 @@ function Profile() {
 
           <button
             type="submit"
-            className="my-4 h-12 bg-button rounded-xl px-8 mt-8 text-white hover: bg-button_hover shadow-xl transition ease-in duration-150"
+            className="my-4 h-12 bg-button rounded-xl px-8 mt-8 text-white hover:bg-button_hover shadow-xl transition ease-in duration-150"
           >
             Save
           </button>
