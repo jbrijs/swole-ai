@@ -202,21 +202,21 @@ function Home() {
                   <div className="flex gap-3 sm:gap-6 w-full items-center">
                     {editable ? (
                       <button
-                        className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                        className="h-12 sm:h-14 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={editPlan}
                       >
                         Save Plan
                       </button>
                     ) : (
                       <button
-                        className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                        className="h-12 sm:h-14 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={() => setEditable(true)}
                       >
                         Edit plan
                       </button>
                     )}
                     <button
-                      className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      className="h-12 sm:h-14 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                       onClick={handleDeleteButton}
                     >
                       Delete Plan
@@ -227,16 +227,16 @@ function Home() {
                 {!userPlan && (
                   <div className="flex items-center justify-center w-full gap-4">
                     <button
-                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      className="h-14 text-sm sm:text-lg px-2 sm:px-4 bg-button rounded-xl text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                       onClick={handleCreateNewPlan}
                     >
-                      Manually create a plan
+                      Manually create plan
                     </button>
                     <button
-                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      className="h-14 text-sm sm:text-lg px-2 sm:px-4 bg-button rounded-xl text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                       onClick={handleGeneratePlan}
                     >
-                      Generate a plan using AI
+                      Generate plan using AI
                     </button>
                   </div>
                 )}
