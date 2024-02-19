@@ -185,7 +185,6 @@ function Home() {
       <h1 className="text-3xl md:text-4xl lg:text-5xl text-text lg:font-light mt-10 mb-10 sm:mt-20 sm:mb-20 md:mb-30">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
-      {/* <div className="flex flex-row items-center justify-center gap-3 mb-20"></div> */}
       <div className="w-11/12 md:w-3/4 xl:w-2/3">
         {loading ? (
           <div className="flex items-center justify-center">
@@ -200,24 +199,24 @@ function Home() {
                 }`}
               >
                 {userPlan && (
-                  <div className="flex gap-6 w-full items-center">
+                  <div className="flex gap-3 sm:gap-6 w-full items-center">
                     {editable ? (
                       <button
-                        className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                        className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={editPlan}
                       >
                         Save Plan
                       </button>
                     ) : (
                       <button
-                        className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                        className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                         onClick={() => setEditable(true)}
                       >
                         Edit plan
                       </button>
                     )}
                     <button
-                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      className="h-10 sm:h-12 text-xs sm:text-lg xl:text-xl bg-button rounded-xl  px-2 sm:px-4 md:px-6 xl:px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
                       onClick={handleDeleteButton}
                     >
                       Delete Plan
