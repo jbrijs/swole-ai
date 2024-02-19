@@ -250,7 +250,7 @@ function Home() {
                 />
               )}
             </div>
-            <div className="h-4 mt-8">
+            <div className="h-2 mt-4 sm:h-4 sm:mt-8">
               {editable && errorMessage && (
                 <ErrorMessage message={errorMessage} />
               )}
