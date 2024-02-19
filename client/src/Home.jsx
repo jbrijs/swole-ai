@@ -83,7 +83,7 @@ function Home() {
 
   async function generatePlan() {
     let shouldGenerate = true;
-  
+
     if (userPlan) {
       const confirm = window.confirm(
         "Are you sure? Doing so will delete your current plan."
@@ -93,7 +93,7 @@ function Home() {
         await deletePlan(); // Await the completion of deletePlan
       }
     }
-  
+
     if (shouldGenerate) {
       setLoading(true);
       try {
@@ -120,7 +120,6 @@ function Home() {
       }
     }
   }
-  
 
   async function editPlan() {
     const res = await fetch("/api/edit_plan", {
@@ -183,25 +182,25 @@ function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-5xl text-text font-light my-20">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl text-text lg:font-light mt-10 mb-10 sm:mt-20 sm:mb-20 md:mb-30">
         Welcome to SwoleAI, {userName + "!"}
       </h1>
-      <div className="flex flex-row items-center justify-center gap-3 mb-20"></div>
-      <div className="w-3/4">
+      {/* <div className="flex flex-row items-center justify-center gap-3 mb-20"></div> */}
+      <div className="w-11/12 md:w-3/4 xl:w-2/3">
         {loading ? (
           <div className="flex items-center justify-center">
             <PuffLoader color="#F26419" />
           </div>
         ) : (
           <>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center ">
               <div
                 className={`flex gap-6 w-full ${
                   userPlan ? "" : "justify-center"
                 }`}
               >
                 {userPlan && (
-                  <div>
+                  <div className="flex gap-6 w-full items-center">
                     {editable ? (
                       <button
                         className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
@@ -217,28 +216,30 @@ function Home() {
                         Edit plan
                       </button>
                     )}
+                    <button
+                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      onClick={handleDeleteButton}
+                    >
+                      Delete Plan
+                    </button>
                   </div>
                 )}
 
-                <button
-                  className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
-                  onClick={handleCreateNewPlan}
-                >
-                  Manually create a plan
-                </button>
-                <button
-                  className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
-                  onClick={handleGeneratePlan}
-                >
-                  Generate a plan using AI
-                </button>
-                {userPlan && (
-                  <button
-                    className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
-                    onClick={handleDeleteButton}
-                  >
-                    Delete Plan
-                  </button>
+                {!userPlan && (
+                  <div className="flex items-center justify-center w-full gap-4">
+                    <button
+                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      onClick={handleCreateNewPlan}
+                    >
+                      Manually create a plan
+                    </button>
+                    <button
+                      className="h-12 bg-button rounded-xl px-4 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+                      onClick={handleGeneratePlan}
+                    >
+                      Generate a plan using AI
+                    </button>
+                  </div>
                 )}
               </div>
 
