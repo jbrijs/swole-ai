@@ -6,10 +6,15 @@ function ExerciseInput({ exercise, onChange, editable, onDelete }) {
   let className = "";
   editable
     ? (className =
-        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 py-1")
+        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-200 sm:py-1")
     : (className =
-        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 py-1");
-
+        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 sm:py-1");
+  let exerciseClassName = "";
+  editable
+    ? (exerciseClassName =
+        "sm:w-1/4 w-1/2 text-center border-r border-l border-b border-gray-400 bg-slate-200 sm:py-1")
+    : (className =
+        "sm:w-1/4 w-1/2 text-center border-r border-l border-b border-gray-400 bg-slate-100 sm:py-1");
   let deleteClassName = "";
   editable
     ? (deleteClassName =
@@ -25,7 +30,7 @@ function ExerciseInput({ exercise, onChange, editable, onDelete }) {
         value={exercise.name == null ? "Exercise" : exercise.name}
         placeholder="Exercise Name"
         onChange={onChange}
-        className={className}
+        className={exerciseClassName}
         readOnly={!editable}
       />
       <input

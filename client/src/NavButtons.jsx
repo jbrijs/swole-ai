@@ -2,7 +2,7 @@ import React from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
-function NavButtons({ currentWeek, setCurrentWeek, savePlan, numWeeks, canSave }) {
+function NavButtons({ currentWeek, setCurrentWeek, numWeeks}) {
   return (
     <div className="flex w-full justify-end items-center gap-8">
       <div className="flex gap-2">
@@ -30,13 +30,7 @@ function NavButtons({ currentWeek, setCurrentWeek, savePlan, numWeeks, canSave }
         </button>
       </div>
 
-      {canSave && <button
-        className="h-12 bg-button rounded-xl px-8 text-white hover:bg-button_hover transition ease-in duration-150"
-        onClick={savePlan}
-        type="submit"
-      >
-        Save Plan
-      </button>}
+      
     </div>
   );
 }

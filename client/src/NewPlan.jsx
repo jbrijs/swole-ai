@@ -251,37 +251,47 @@ function NewPlan() {
   return (
     <>
       <div className="flex flex-col h-full items-center justify-center w-full">
-        <form className="w-3/4 my-10" onSubmit={createPlan}>
-          <h1 className="text-5xl font-light text-text my-10" key={currentWeek}>
+        <form className="mx-4 sm:mx-0 sm:w-3/4 my-10" onSubmit={createPlan}>
+          <h1
+            className="text-4xl mb-10 sm:text-5xl sm:font-light text-text sm:my-10"
+            key={currentWeek}
+          >
             Week {currentWeek + 1}
           </h1>
           <div className="h-4">
             {errorMessage && <ErrorMessage message={errorMessage} />}
           </div>
+          <div className="flex w-full justify-end items-center gap-8">
+            <NavButtons
+              currentWeek={currentWeek}
+              setCurrentWeek={setCurrentWeek}
+              numWeeks={numWeeks}
+            />
+            <button
+              className="h-12 bg-button rounded-xl px-8 text-white hover:bg-button_hover transition ease-in duration-150"
+              onClick={createPlan}
+              type="submit"
+            >
+              Save Plan
+            </button>
+          </div>
 
-          <NavButtons
-            currentWeek={currentWeek}
-            setCurrentWeek={setCurrentWeek}
-            savePlan={createPlan}
-            numWeeks={numWeeks}
-            canSave={true}
-          />
           {plan.weeks[currentWeek].days.map((day, dayIndex) => (
             <div key={dayIndex}>
               <h1 className="text-2xl text-text pb-2 pt-6" key={dayIndex}>
                 Day {dayIndex + 1}
               </h1>
-              <div className="flex flex-row items-center h-12">
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center">
+              <div className="flex flex-row items-center h-8 sm:h-12">
+                <p className="w-1/2 sm:w-1/4 text-center sm:text-xl text-white sm:font-semibold bg-secondary h-full flex items-center justify-center">
                   Exercise
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-l-2 border-r-2 border-background">
+                <p className="w-1/4 text-center sm:text-xl text-white sm:font-semibold bg-secondary h-full flex items-center justify-center border-l-2 border-r-2 border-background">
                   Sets
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
+                <p className="w-1/4 text-center sm:text-xl text-white sm:font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
                   Reps
                 </p>
-                <p className="w-1/4 text-center text-xl text-white font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
+                <p className="w-1/4 text-center sm:text-xl text-white sm:font-semibold bg-secondary h-full flex items-center justify-center border-r-2 border-background">
                   Weight
                 </p>
                 <button
