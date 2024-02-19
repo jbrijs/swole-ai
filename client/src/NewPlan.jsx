@@ -261,14 +261,14 @@ function NewPlan() {
           <div className="h-4">
             {errorMessage && <ErrorMessage message={errorMessage} />}
           </div>
-          <div className="flex w-full justify-end items-center gap-8">
+          <div className="flex w-full justify-end items-center gap-4 sm:gap-8">
             <NavButtons
               currentWeek={currentWeek}
               setCurrentWeek={setCurrentWeek}
               numWeeks={numWeeks}
             />
             <button
-              className="h-12 bg-button rounded-xl px-8 text-white hover:bg-button_hover transition ease-in duration-150"
+              className="w-40 h-12 sm:h-14 text-md sm:text-lg bg-button rounded-xl text-white hover:bg-button_hover transition ease-in duration-150"
               onClick={createPlan}
               type="submit"
             >
@@ -322,7 +322,6 @@ function NewPlan() {
                   />
                 </React.Fragment>
               ))}
-              <div className="w-full flex justify-end"></div>
               <div className="w-full flex justify-end items-center">
                 <button
                   type="button"
@@ -335,18 +334,12 @@ function NewPlan() {
             </div>
           ))}
         </form>
-        <div className="w-3/4 flex justify-end gap-4 items-center mb-16 h-12">
+        <div className="w-full mr-8 sm:mr-0 sm:w-3/4 flex justify-end gap-4 items-center mb-16 h-12">
           <AddModal
             visibility={showAddModal}
             addDay={() => handleAddDay(currentWeek)}
             addWeek={() => handleAddWeek()}
           />
-          {/* <button
-          type="button"
-          className="h-12 w-12 rounded-xl bg-secondary text-white"
-          onClick={() => handleRemoveWeek(currentWeek)}>
-            <DeleteOutlineIcon/>
-          </button> */}
           <AddButton onClick={handleAddButtonClick} />
         </div>
       </div>
