@@ -19,21 +19,21 @@ function App() {
 
   return (
     <>
-      <nav className="bg-primary flex flex-row justify-end items-center h-16 shadow-lg top-0 left-0 gap-10">
+      <nav className="bg-primary flex flex-row justify-end items-center h-16 shadow-lg top-0 left-0 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
         <Link
-          className="text-xl text-white font-light hover:underline underline-offset-4 decoration-1 decoration-accent"
+          className="text-base sm:text-lg md:text-xl text-white font-light hover:underline underline-offset-4 decoration-1 decoration-accent"
           to="/"
         >
          Home
         </Link>
         <Link
-          className="text-xl text-white font-light hover:underline underline-offset-4 decoration-1 decoration-accent"
+          className="text-base sm:text-lg md:text-xl text-white font-light hover:underline underline-offset-4 decoration-1 decoration-accent"
           to="/profile"
         >
           Profile
         </Link>
         <button
-          className="text-xl text-white font-light pr-10 hover:underline underline-offset-4 decoration-1 decoration-accent"
+          className="text-base sm:text-lg md:text-xl text-white font-light pr-4 sm:pr-6 md:pr-10 hover:underline underline-offset-4 decoration-1 decoration-accent"
           onClick={logout}
         >
           Logout
