@@ -70,14 +70,15 @@ function Profile() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center m-20">
-        <form
-          onSubmit={createProfile}
-          className="flex flex-col items-start w-1/2"
-        >
-          <h2 className="text-4xl font-light text-text my-10">
+      <div className="flex flex-col justify-center items-center mx-10 sm:mx-0 sm:my-20">
+      <h2 className="text-4xl font-light text-text my-10 ">
             Personal Information
           </h2>
+        <form
+          onSubmit={createProfile}
+          className="flex flex-col sm:items-start w-full mx-10 sm:w-1/2"
+        >
+          
           <NumberForm
             name={"age"}
             value={age}
