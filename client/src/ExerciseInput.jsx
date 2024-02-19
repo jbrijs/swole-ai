@@ -13,8 +13,8 @@ function ExerciseInput({ exercise, onChange, editable, onDelete }) {
   editable
     ? (exerciseClassName =
         "sm:w-1/4 w-1/2 text-center border-r border-l border-b border-gray-400 bg-slate-200 sm:py-1")
-    : (className =
-        "sm:w-1/4 w-1/2 text-center border-r border-l border-b border-gray-400 bg-slate-100 sm:py-1");
+    : (exerciseClassName =
+        "w-1/4 text-center border-r border-l border-b border-gray-400 bg-slate-100 sm:py-1");
   let deleteClassName = "";
   editable
     ? (deleteClassName =
