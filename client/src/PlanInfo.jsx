@@ -16,10 +16,10 @@ function PlanInfo() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mx-10 sm:mx-0 sm:my-20">
-      <h2 className="text-4xl mt-10 mb-20 sm:my-10 font-light text-text">Plan Information</h2>
-      <form onSubmit={goToNewPlan} className="flex flex-col gap-2 sm:gap-0 sm:items-start w-full sm:w-1/2">
-        <NumberForm
+    <div className="flex flex-col justify-center items-center mx-10 sm:mx-0 sm:mb-20 sm:mt-14">
+      <h2 className="text-4xl mt-10 mb-20 sm:mb-10 font-light text-text">Plan Information</h2>
+      <form onSubmit={goToNewPlan} className="bg-slate-50 shadow-xl rounded-xl p-4 flex flex-col items-center justify-center gap-2 sm:gap-0 sm:items-start w-full sm:w-5/12">
+        <NumberForm 
           value={numWeeks}
           label="Number of weeks"
           name="number of weeks"
@@ -45,7 +45,7 @@ function PlanInfo() {
         />
         <button
           type="submit"
-          className="w-full mt-40 sm:my-4 sm:w-auto h-12 bg-button rounded-xl px-8 mt-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
+          className="w-full mt-8 sm:mb-4 sm:mt-10 h-12 bg-button rounded-xl px-8 text-white shadow-md hover:bg-button_hover transition ease-in duration-150 shadow-xl"
         >
           Submit
         </button>
