@@ -10,7 +10,7 @@ function Infobox() {
         onClick={() => {
           setIsMessageVisible(!isMessageVisible);
         }}
-        className="mx-10 px-4 py-2 bg-slate-100 text-secondary font-medium rounded-xl cursor-pointer border-2 border-secondary mt-4 absolute bottom-20 sm:absolute sm:bottom-10"
+        className="px-4 py-2 bg-slate-100 text-secondary font-medium rounded-xl cursor-pointer border-2 border-secondary mt-4"
       >
         <div className="items-center justify-center flex flex-row">
           {!isMessageVisible && (

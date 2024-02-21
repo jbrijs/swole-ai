@@ -4,13 +4,13 @@ function SelectionForm({value, label, name, onChange, options}) {
   return (
     <>
       <label
-        className="text-2xl text-text pt-6 pb-2 sm:pb-1 sm:pt-4"
+        className="text-gray-700 font-semibold text-text text-lg pt-4 pb-1 sm:pb-1 sm:pt-6"
         htmlFor={name}
       >
         {label}
       </label>
       <select
-        className="h-8 rounded-xl bg-slate-50 w-full text-center sm:text-left pl-2"
+        className="py-1 rounded-md bg-slate-200 border border-slate-300 h-10 w-full sm:pl-2 text-center sm:text-start"
         id={name}
         name={name}
         onChange={onChange}

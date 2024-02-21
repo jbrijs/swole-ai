@@ -10,8 +10,7 @@ function NumberForm({ value, label, name, onChange, min, max }) {
         {label}
       </label>
       <input
-        className="py-1 rounded-md
-         bg-slate-200 border border-slate-300 h-10 w-full sm:pl-2 text-center sm:text-start"
+        className="py-1 rounded-md bg-slate-200 border border-slate-300 h-10 w-full sm:pl-2 text-center sm:text-start"
         type="number"
         name={name}
         id={name}

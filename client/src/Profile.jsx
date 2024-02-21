@@ -70,13 +70,13 @@ function Profile() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mx-10 sm:mx-0 sm:my-20">
+      <div className="flex flex-col justify-center items-center mx-10 sm:mx-0 sm:my-8">
       <h2 className="text-4xl font-light text-text my-10 ">
             Personal Information
           </h2>
         <form
           onSubmit={createProfile}
-          className="flex flex-col sm:items-start w-full mx-10 sm:w-1/2"
+          className="bg-slate-50 shadow-xl rounded-xl p-4 flex flex-col sm:items-start w-full mx-10 sm:w-1/2"
         >
           
           <NumberForm
@@ -119,10 +119,11 @@ function Profile() {
 
           <button
             type="submit"
-            className="my-4 h-12 bg-button rounded-xl px-8 mt-8 text-white hover:bg-button_hover shadow-xl transition ease-in duration-150"
+            className="my-4 h-12 w-full bg-button rounded-xl px-8 mt-8 text-white hover:bg-button_hover shadow-xl transition ease-in duration-150"
           >
             Save
           </button>
+         
         </form>
         <Infobox />
       </div>
